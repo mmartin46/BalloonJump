@@ -2,6 +2,7 @@
 #include "map.h"
 #include "player.h"
 #include "map.h"
+#include "background.h"
 #include <memory>
 
 #ifndef SCREEN_WIDTH
@@ -22,6 +23,7 @@ class Game
     private:
         sf::RenderWindow *window;
         std::shared_ptr<Player> player;
+        std::shared_ptr<Background> background;
 
         std::shared_ptr<Map> game_map;
         sf::Texture map_sprite_texture;
@@ -30,10 +32,16 @@ class Game
         std::shared_ptr<Player> get_player() { return player; }
         void update();
         void draw();
+        void set_background(const char *background_file_path);
 
         int entity_collision(Player &plyr, int i, int j, std::pair<int, int> dim);
         void collision_handler();
 };
+
+void Game::set_background(const char *background_file_path)
+{
+    background->set_texture(background_file_path);
+}
 
 int Game::entity_collision(Player &plyr, int i, int j, std::pair<int, int> dim)
 {
@@ -135,10 +143,12 @@ Game::Game(sf::RenderWindow *window, int width, int height, const char *file_nam
                                 map_sprite_texture, TILE_SIZE,
                                 &world::coordinate_map, file_name,
                                 NUM_TILES);
+    background = std::make_shared<Background>("bg.png", *window);
 }
 
 void Game::draw()
 {
+    background->draw();
     player->draw(*window);
     game_map->draw();
 }
