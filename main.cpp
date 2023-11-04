@@ -22,6 +22,7 @@ class Game
 {
     private:
         sf::RenderWindow *window;
+        sf::View game_view;
         std::shared_ptr<Player> player;
         std::shared_ptr<Background> background;
 
@@ -36,7 +37,17 @@ class Game
 
         int entity_collision(Player &plyr, int i, int j, std::pair<int, int> dim);
         void collision_handler();
+
+        bool check_tile_collision(const sf::Sprite &sprite, const sf::Sprite &tile_sprite);
 };
+
+bool Game::check_tile_collision(const sf::Sprite &sprite, const sf::Sprite &tile_sprite)
+{
+    sf::FloatRect sprite_bounds = sprite.getGlobalBounds();
+    sf::FloatRect tile_bounds = tile_sprite.getGlobalBounds();
+
+    return sprite_bounds.intersects(tile_bounds);
+}
 
 void Game::set_background(const char *background_file_path)
 {
@@ -124,6 +135,17 @@ void Game::collision_handler()
     {
         for (y = 0; y < MAP_COLUMNS; ++y)
         {
+            Tile *current_tile = &game_map->get_tile_map()->at(x).at(y);
+            if (check_tile_collision(get_player()->get_sprite(), *current_tile->get_sprite()))
+            {
+                // Check for a coin
+                if (current_tile->get_value() == 5)
+                {
+                    game_map->get_tile_map()->at(x).at(y).set_value(0);
+                }
+            }
+
+
             entity_collision(*get_player(), x, y, {PLAYER_WIDTH, PLAYER_HEIGHT});
         }
     }
@@ -149,6 +171,7 @@ Game::Game(sf::RenderWindow *window, int width, int height, const char *file_nam
 void Game::draw()
 {
     background->draw();
+
     player->draw(*window);
     game_map->draw();
 }

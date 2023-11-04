@@ -60,6 +60,8 @@ class Player : public virtual Entity
         void set_y(double y) override { this->y = y; }
         void draw(sf::RenderWindow &window);
 
+        sf::Sprite get_sprite() { return sprites.at(frame); }
+
         double get_dx() const { return this->dx; }
         void set_dx(double dx) { this->dx = dx; }
         double get_dy() const { return this->dy; }
