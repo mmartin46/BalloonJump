@@ -20,8 +20,21 @@ class EnemyHandler
         // Updates all the enemies
         void update_enemies();
         // Draws all the enemies
-        void draw_enemies();    
+        void draw_enemies();
+
+        // Returns a pointer to an enemy.
+        std::shared_ptr<Enemy> get_enemy(int idx);
 };
+
+std::shared_ptr<Enemy> EnemyHandler::get_enemy(int idx)
+{
+    if (idx >= enemies.size() || idx < 0)
+    {
+        std::cout << "Enemy() -> get_enemy(idx) -> Index out of range" << std::endl;
+        exit(1);
+    }
+    return enemies.at(idx);
+}
 
 vector<std::shared_ptr<Enemy>> EnemyHandler::allocate_enemies(const int NUM_ENEMIES, int x_boundary, int y_boundary)
 {
@@ -45,7 +58,7 @@ void EnemyHandler::draw_enemies()
     typename vector<std::shared_ptr<Enemy>>::pointer enemy, enemy_end = enemies.data() + enemies.size();
     for (enemy = enemies.data(); enemy < enemy_end; ++enemy)
     {
-        (*(*enemy)).draw(*window_ptr);
+        (*enemy)->draw(*window_ptr);
     }
 }
 
@@ -54,6 +67,6 @@ void EnemyHandler::update_enemies()
     typename vector<std::shared_ptr<Enemy>>::pointer enemy, enemy_end = enemies.data() + enemies.size();
     for (enemy = enemies.data(); enemy < enemy_end; ++enemy)
     {
-        (*(*enemy)).update();
+        (*enemy)->update();
     }
 }
