@@ -17,8 +17,10 @@ constexpr int JUMP_HEIGHT = -20;
 #define RIGHT -1.0f
 
 
-#define PLAYER_WIDTH 16
-#define PLAYER_HEIGHT 16
+constexpr int PLAYER_WIDTH = 16;
+constexpr int PLAYER_HEIGHT = 16;
+constexpr int PLAYER_DEFAULT_ROWS = 4;
+constexpr int PLAYER_DEFAULT_COLS = 4;
 
 #define PLAYER_RUNNING_FRAMES(timer) (timer % 3) + 4
 #define PLAYER_IDLE_FRAMES(timer) timer % 3
@@ -58,7 +60,7 @@ class Player : public virtual Entity
         void set_x(double x) override { this->x = x; }
         double get_y() override { return y; }
         void set_y(double y) override { this->y = y; }
-        void draw(sf::RenderWindow &window);
+        virtual void draw(sf::RenderWindow &window);
 
         sf::Sprite get_sprite() { return sprites.at(frame); }
 
@@ -74,8 +76,9 @@ class Player : public virtual Entity
         bool get_on_ground() { return on_ground; }
         void jump();
         void apply_gravity(bool gravity_switch);
-        void update();
-        void init_sprites();
+        virtual void update();
+        void init_sprites(int player_width, int player_height, 
+                        int player_sprite_rows, int player_sprite_cols, const char *file_name="aggie_trans.png");
 };
 
 void Player::apply_gravity(bool gravity_switch)
@@ -181,7 +184,8 @@ Player::Player(int x, int y)
     sprites = std::vector<sf::Sprite>();
     frame = 0;
 
-    init_sprites();
+    init_sprites(PLAYER_WIDTH, PLAYER_HEIGHT, 
+                PLAYER_DEFAULT_ROWS, PLAYER_DEFAULT_COLS);
 }
 Player::Player()
 {
@@ -192,27 +196,28 @@ Player::Player()
     sprites = std::vector<sf::Sprite>();
     frame = 0;
 
-    init_sprites();
+    init_sprites(PLAYER_WIDTH, PLAYER_HEIGHT, 4, 4);
 }
 
-void Player::init_sprites()
+void Player::init_sprites(int player_width, int player_height, 
+                            int player_sprite_rows, int player_sprite_cols,
+                            const char *file_name)
 {
-    if (!texture.loadFromFile("aggie_trans.png"))
+    if (!texture.loadFromFile(file_name))
     {
         exit(1);
     }
-    for (size_t x = 0; x < 4; ++x)
+    for (size_t x = 0; x < player_sprite_rows; ++x)
     {
-        for (size_t y = 0; y < 4; ++y)
+        for (size_t y = 0; y < player_sprite_cols; ++y)
         {
             sf::Sprite sprite;
             sprite.setTexture(texture);
             sf::IntRect tileRect(y * PLAYER_WIDTH, x * PLAYER_HEIGHT, 
-                                16, 16);
+                                player_width, player_height);
             sprite.setTextureRect(tileRect);
             sprite.setPosition(get_x(), get_y());
             sprites.push_back(sprite);
         }
     }
-    std::cout << "init_sprites(): x=" << get_x() << " y=" << get_y() << std::endl;
 }

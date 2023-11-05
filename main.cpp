@@ -3,7 +3,9 @@
 #include "player.h"
 #include "map.h"
 #include "background.h"
+#include "enemyhandler.h"
 #include <memory>
+#include <random>
 
 #ifndef SCREEN_WIDTH
     #define SCREEN_WIDTH 1280
@@ -14,6 +16,7 @@
 #endif
 
 
+constexpr int ENEMY_COUNT = 1;
 
 #define MAP_ROWS 48
 #define MAP_COLUMNS 82
@@ -25,6 +28,9 @@ class Game
         sf::View game_view;
         std::shared_ptr<Player> player;
         std::shared_ptr<Background> background;
+
+
+        EnemyHandler enemy_handler;
 
         std::shared_ptr<Map> game_map;
         sf::Texture map_sprite_texture;
@@ -39,7 +45,17 @@ class Game
         void collision_handler();
 
         bool check_tile_collision(const sf::Sprite &sprite, const sf::Sprite &tile_sprite);
+        
+        // May be a seperate class in itself
+
+        // Allocates the needed number of enemies for the game
+        void allocate_enemies(const int NUM_ENEMIES, int x_boundary, int y_boundary);
+        // Updates all the enemies
+        void update_enemies();
+        // Draws all the enemies
+        void draw_enemies();
 };
+
 
 bool Game::check_tile_collision(const sf::Sprite &sprite, const sf::Sprite &tile_sprite)
 {
@@ -154,6 +170,7 @@ void Game::collision_handler()
 Game::Game(sf::RenderWindow *window, int width, int height, const char *file_name)
 {
     this->window = window;
+    enemy_handler = EnemyHandler(window);
     if (!map_sprite_texture.loadFromFile(file_name))
     {
         std::cerr << "Game(): Failed to load tile sheet." << std::endl;
@@ -166,6 +183,8 @@ Game::Game(sf::RenderWindow *window, int width, int height, const char *file_nam
                                 &world::coordinate_map, file_name,
                                 NUM_TILES);
     background = std::make_shared<Background>("bg.png", *window);
+    
+    enemy_handler.allocate_enemies(10, 800, 800);
 }
 
 void Game::draw()
@@ -173,12 +192,14 @@ void Game::draw()
     background->draw();
 
     player->draw(*window);
+    enemy_handler.draw_enemies();
     game_map->draw();
 }
 
 void Game::update()
 {
     player->update();
+    enemy_handler.update_enemies();
     collision_handler();
 }
 
