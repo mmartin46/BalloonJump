@@ -6,6 +6,10 @@
 #include <vector>
 #include "entity.h"
 
+#define SCREEN_WIDTH 1280
+#define SCREEN_HEIGHT 600
+
+
 constexpr int PLAYER_SPEED = 6;
 constexpr int DEFAULT_PLAYER_X = 250;
 constexpr int DEFAULT_PLAYER_Y = 0;
@@ -118,7 +122,7 @@ void Player::update()
 
     if (Keyboard::isKeyPressed(sf::Keyboard::Left))
     {
-        frame = (timer % 3) + 4;
+        frame = PLAYER_RUNNING_FRAMES(timer);
         this->set_dx(-PLAYER_SPEED);
         facing_right = false;
     }

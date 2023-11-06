@@ -45,17 +45,34 @@ class Game
         void collision_handler();
 
         bool check_tile_collision(const sf::Sprite &sprite, const sf::Sprite &tile_sprite);
-        
-        // May be a seperate class in itself
+        void enemy_collision_handler();
 
-        // Allocates the needed number of enemies for the game
-        void allocate_enemies(const int NUM_ENEMIES, int x_boundary, int y_boundary);
-        // Updates all the enemies
-        void update_enemies();
-        // Draws all the enemies
-        void draw_enemies();
+        bool player_landed_on_enemy(Player &plyr, std::pair<int, int> dim);
 };
 
+bool Game::player_landed_on_enemy(Player &plyr, std::pair<int, int> dim)
+{
+    int touched = 0;
+    Matrix<Tile> &tiles = *game_map->get_tile_map();
+    float pw = dim.first, ph = dim.second;
+    float px = plyr.get_x(), py = plyr.get_y();
+
+    for (auto &enemy : *enemy_handler.get_enemies())
+    {
+        float ex = enemy->get_x();
+        float ey = enemy->get_y();
+        float ew = ENEMY_WIDTH;
+        float eh = ENEMY_HEIGHT;
+
+        if (px + pw > ex && px < ex + ew && py + ph > ey && py < ey)
+        {
+            return true;
+        }
+
+    }
+    return false;
+
+}
 
 bool Game::check_tile_collision(const sf::Sprite &sprite, const sf::Sprite &tile_sprite)
 {
@@ -167,6 +184,21 @@ void Game::collision_handler()
     }
 }
 
+void Game::enemy_collision_handler()
+{
+    int x, y, z;
+    for (x = 0; x < MAP_ROWS; ++x)
+    {
+        for (y = 0; y < MAP_COLUMNS; ++y)
+        {
+            for (auto &enemy : *enemy_handler.get_enemies())
+            {
+                entity_collision(*enemy, x, y, {ENEMY_WIDTH, ENEMY_HEIGHT});            
+            }
+        }
+    }    
+}
+
 Game::Game(sf::RenderWindow *window, int width, int height, const char *file_name)
 {
     this->window = window;
@@ -182,7 +214,7 @@ Game::Game(sf::RenderWindow *window, int width, int height, const char *file_nam
                                 map_sprite_texture, TILE_SIZE,
                                 &world::coordinate_map, file_name,
                                 NUM_TILES);
-    background = std::make_shared<Background>("bg.png", *window);
+    background = std::make_shared<Background>("1330857.jpg", *window);
     
     enemy_handler.allocate_enemies(10, 800, 800);
 }
@@ -201,6 +233,13 @@ void Game::update()
     player->update();
     enemy_handler.update_enemies();
     collision_handler();
+    enemy_collision_handler();
+
+    // Testing
+    if (player_landed_on_enemy(*get_player(), {PLAYER_WIDTH, PLAYER_HEIGHT}))
+    {
+        player->set_dy(JUMP_HEIGHT / 2);
+    }
 }
 
 
@@ -222,7 +261,7 @@ int main()
             }
         }
 
-        configurations::delay();
+        configurations::delay(DELAY_TIME-1000);
         window.clear(sf::Color::White);
 
         game.draw();
