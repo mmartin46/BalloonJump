@@ -21,6 +21,7 @@ class Enemy : public Player
         int frame;
         int timer = 0;
 
+        bool stomped_on;
         bool on_ground;
         bool facing_right;
         bool is_jumping;
@@ -31,12 +32,15 @@ class Enemy : public Player
 
         void init_sprites(int player_width, int player_height, int num_sprites, const char *file_name);
 
+        void set_stomped_on(bool status) { stomped_on = status; }
+        bool get_stomped_on() { return stomped_on; }
         void move_left();
         void move_right();
 };
 
 Enemy::Enemy(int x, int y)
 {
+    set_stomped_on(false);
     set_x(x);
     set_y(y);
     set_dx(0);

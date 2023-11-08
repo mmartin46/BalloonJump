@@ -17,6 +17,8 @@ class EnemyHandler
         {}
         // Allocates the needed number of enemies for the game
         vector<std::shared_ptr<Enemy>> allocate_enemies(const int NUM_ENEMIES, int x_boundary, int y_boundary);
+        
+        void update_stomped_enemies(); 
         // Updates all the enemies
         void update_enemies();
         // Draws all the enemies
@@ -26,6 +28,19 @@ class EnemyHandler
         std::shared_ptr<Enemy> get_enemy(int idx);
         vector<std::shared_ptr<Enemy>>* get_enemies() { return &enemies; };
 };
+
+void EnemyHandler::update_stomped_enemies()
+{
+    auto it = get_enemies()->begin();
+    for (; it != get_enemies()->end(); ++it)
+    {
+        if ((*it)->get_stomped_on())
+        {
+            it = get_enemies()->erase(it);
+            break;
+        }
+    }
+}
 
 std::shared_ptr<Enemy> EnemyHandler::get_enemy(int idx)
 {
@@ -70,4 +85,5 @@ void EnemyHandler::update_enemies()
     {
         (*enemy)->update();
     }
+    update_stomped_enemies();
 }
