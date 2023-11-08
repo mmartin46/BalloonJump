@@ -218,20 +218,25 @@ Game::Game(sf::RenderWindow *window, int width, int height, const char *file_nam
     background = std::make_shared<Background>("1330857.jpg", *window);
     
     enemy_handler.allocate_enemies(10, 800, 800);
+
+    game_view.setSize(width / 2, height / 2);
 }
 
 void Game::draw()
 {
+    window->setView(game_view);
     background->draw();
 
     player->draw(*window);
     enemy_handler.draw_enemies();
     game_map->draw();
+
+    window->setView(window->getDefaultView());
 }
 
 void Game::update()
 {
-    player->update();
+    get_player()->update();
     enemy_handler.update_enemies();
     collision_handler();
     enemy_collision_handler();
@@ -239,8 +244,10 @@ void Game::update()
     // Testing
     if (player_landed_on_enemy(*get_player(), {PLAYER_WIDTH, PLAYER_HEIGHT}))
     {
-        player->set_dy(JUMP_HEIGHT / 2);
+        get_player()->set_dy(JUMP_HEIGHT / 2);
     }
+
+    game_view.setCenter(get_player()->get_x(), get_player()->get_y());
 }
 
 
