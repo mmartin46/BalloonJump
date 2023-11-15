@@ -18,9 +18,9 @@ class EnemyHandler
         // Allocates the needed number of enemies for the game
         vector<std::shared_ptr<Enemy>> allocate_enemies(const int NUM_ENEMIES, int x_boundary, int y_boundary);
         
-        void update_stomped_enemies(); 
+        void update_stomped_enemies(Player *player); 
         // Updates all the enemies
-        void update_enemies();
+        void update_enemies(Player *player);
         // Draws all the enemies
         void draw_enemies();
 
@@ -29,15 +29,15 @@ class EnemyHandler
         vector<std::shared_ptr<Enemy>>* get_enemies() { return &enemies; };
 };
 
-void EnemyHandler::update_stomped_enemies()
+void EnemyHandler::update_stomped_enemies(Player *player)
 {
     std::random_device rand_dev;
     std::default_random_engine engine(rand_dev());
-    std::uniform_int_distribution<int> rand_x_pos(100, 5000);
-    std::uniform_int_distribution<int> rand_y_pos(100, 5000);
+    std::uniform_int_distribution<int> rand_x_offset(900, 1500);
+    std::uniform_int_distribution<int> rand_y_offset(0, 400);
     
-    int x_pos = rand_x_pos(engine);
-    int y_pos = rand_y_pos(engine);
+    int x_off = rand_x_offset(engine);
+    int y_off = rand_y_offset(engine);
 
 
     auto it = get_enemies()->begin();
@@ -45,8 +45,8 @@ void EnemyHandler::update_stomped_enemies()
     {
         if ((*it)->get_stomped_on())
         {
-            (*it)->set_x(x_pos);
-            (*it)->set_y(y_pos);
+            (*it)->set_x(player->get_x() + x_off);
+            (*it)->set_y(player->get_y() - y_off);
             (*it)->set_stomped_on(false);
             break;
         }
@@ -89,12 +89,12 @@ void EnemyHandler::draw_enemies()
     }
 }
 
-void EnemyHandler::update_enemies()
+void EnemyHandler::update_enemies(Player *player)
 {
     typename vector<std::shared_ptr<Enemy>>::pointer enemy, enemy_end = enemies.data() + enemies.size();
     for (enemy = enemies.data(); enemy < enemy_end; ++enemy)
     {
         (*enemy)->update();
     }
-    update_stomped_enemies();
+    update_stomped_enemies(player);
 }

@@ -219,7 +219,7 @@ void Game::draw()
 void Game::update()
 {
     player.update();
-    enemy_handler.update_enemies();
+    enemy_handler.update_enemies(&player);
     collision_handler();
     enemy_collision_handler();
     background->scroll(player.get_dx(), player.get_dy());
