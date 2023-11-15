@@ -8,6 +8,7 @@
 #include "background.h"
 #include <memory>
 #include "enemyhandler.h"
+#include "header.h"
 
 #define PLAYER_INIT_X 100
 #define PLAYER_INIT_Y 100
@@ -19,9 +20,11 @@ class Game
     private:
         sf::RenderWindow *window;
         sf::View game_view;
-
+        
         Map *game_map;
         std::shared_ptr<Background> background;
+
+        GameHeader header;
         EnemyHandler enemy_handler;
         Player player;
     public:
@@ -53,7 +56,7 @@ void Game::enemy_collision_handler()
     }    
 }
 
-Game::Game(sf::RenderWindow *window, Map *map) : window(window), game_map(map), player(PLAYER_INIT_X, PLAYER_INIT_Y)
+Game::Game(sf::RenderWindow *window, Map *map) : window(window), game_map(map), player(PLAYER_INIT_X, PLAYER_INIT_Y), header(window)
 {
     background = std::make_shared<Background>("1330857.jpg", *window);
     enemy_handler = EnemyHandler(window);
@@ -211,6 +214,7 @@ void Game::draw()
 
     player.draw(*window);
     enemy_handler.draw_enemies();
+    header.draw();
 
     window->setView(game_view);
     //window->setView(window->getDefaultView());
@@ -223,7 +227,7 @@ void Game::update()
     collision_handler();
     enemy_collision_handler();
     background->scroll(player.get_dx(), player.get_dy());
-
+    header.scroll(player.get_dx() * 0, player.get_dy() * 0);
     // Testing
     if (player_landed_on_enemy(player, {PLAYER_WIDTH, PLAYER_HEIGHT}))
     {
