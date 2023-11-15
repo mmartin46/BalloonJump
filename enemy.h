@@ -24,7 +24,6 @@ class Enemy : public Player
         bool stomped_on;
         bool on_ground;
         bool facing_right;
-        bool is_jumping;
     public:
         Enemy(int x, int y);
         void update() override;
@@ -52,7 +51,6 @@ Enemy::Enemy(int x, int y)
                         ENEMY_DEFAULT_COLS,
                         "enemy.png");
     set_on_ground(false);
-    set_is_jumping(true);
 }
 
 void Enemy::move_left()
@@ -79,7 +77,7 @@ void Enemy::update()
         move_left();
     }
 
-    apply_gravity(true);
+    apply_gravity(false);
     this->set_x(this->get_x() + this->get_dx());
     this->set_y(this->get_y() + this->get_dy());
 

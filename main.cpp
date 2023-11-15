@@ -1,54 +1,66 @@
-// John 3:16
+#include <SFML/Graphics.hpp>
 #include "map.h"
 #include "player.h"
+
+#include <SFML/Graphics.hpp>
 #include "map.h"
+#include "player.h"
 #include "background.h"
-#include "enemyhandler.h"
 #include <memory>
-#include <random>
+#include "enemyhandler.h"
 
-#ifndef SCREEN_WIDTH
-    #define SCREEN_WIDTH 1280
-#endif
-
-#ifndef SCREEN_HEIGHT
-    #define SCREEN_HEIGHT 600
-#endif
+#define PLAYER_INIT_X 100
+#define PLAYER_INIT_Y 100
 
 
-constexpr int ENEMY_COUNT = 1;
-
-#define MAP_ROWS 48
-#define MAP_COLUMNS 82
 
 class Game
 {
     private:
         sf::RenderWindow *window;
         sf::View game_view;
-        std::shared_ptr<Player> player;
+
+        Map *game_map;
         std::shared_ptr<Background> background;
-
-
         EnemyHandler enemy_handler;
-
-        std::shared_ptr<Map> game_map;
-        sf::Texture map_sprite_texture;
+        Player player;
     public:
-        Game(sf::RenderWindow *window, int width, int height, const char *file_name);
-        std::shared_ptr<Player> get_player() { return player; }
-        void update();
-        void draw();
-        void set_background(const char *background_file_path);
+        Game(sf::RenderWindow *window, Map *game_map);
+        Player get_player() { return player; }
 
+        void draw();
+        void update();
         int entity_collision(Player &plyr, int i, int j, std::pair<int, int> dim);
         void collision_handler();
-
         bool check_tile_collision(const sf::Sprite &sprite, const sf::Sprite &tile_sprite);
         void enemy_collision_handler();
 
-        bool player_landed_on_enemy(Player &plyr, std::pair<int, int> dim);
+        bool player_landed_on_enemy(Player &plyr, std::pair<int, int> dim);        
 };
+
+void Game::enemy_collision_handler()
+{
+    int x, y, z;
+    for (x = 0; x < game_map->get_rows(); ++x)
+    {
+        for (y = 0; y < game_map->get_columns(); ++y)
+        {
+            for (auto &enemy : *enemy_handler.get_enemies())
+            {
+                entity_collision(*enemy, x, y, {ENEMY_WIDTH, ENEMY_HEIGHT});            
+            }
+        }
+    }    
+}
+
+Game::Game(sf::RenderWindow *window, Map *map) : window(window), game_map(map), player(PLAYER_INIT_X, PLAYER_INIT_Y)
+{
+    background = std::make_shared<Background>("1330857.jpg", *window);
+    enemy_handler = EnemyHandler(window);
+
+    enemy_handler.allocate_enemies(20, 2000, 100);
+    game_view.setSize(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2);
+}
 
 bool Game::player_landed_on_enemy(Player &plyr, std::pair<int, int> dim)
 {
@@ -75,18 +87,6 @@ bool Game::player_landed_on_enemy(Player &plyr, std::pair<int, int> dim)
 
 }
 
-bool Game::check_tile_collision(const sf::Sprite &sprite, const sf::Sprite &tile_sprite)
-{
-    sf::FloatRect sprite_bounds = sprite.getGlobalBounds();
-    sf::FloatRect tile_bounds = tile_sprite.getGlobalBounds();
-
-    return sprite_bounds.intersects(tile_bounds);
-}
-
-void Game::set_background(const char *background_file_path)
-{
-    background->set_texture(background_file_path);
-}
 
 int Game::entity_collision(Player &plyr, int i, int j, std::pair<int, int> dim)
 {
@@ -102,6 +102,13 @@ int Game::entity_collision(Player &plyr, int i, int j, std::pair<int, int> dim)
         return 0;
     }
 
+    // Allow the enemy to move through coins
+    Enemy *enemy = dynamic_cast<Enemy*>(&plyr);
+    if (enemy && (tiles.at(i).at(j).get_value() == 5))
+    {
+        return 0;
+    }
+
     if (px+pw/2 > bx && px+pw/2 < bx+bw)
     {
         // Head Bump
@@ -113,8 +120,8 @@ int Game::entity_collision(Player &plyr, int i, int j, std::pair<int, int> dim)
 
             // bumped our head, stop any jump velocity
             //plyr.set_dy(0);
-            // plyr.set_on_ground(false);
-            plyr.set_is_jumping(true);
+            //plyr.set_on_ground(false);
+            //plyr.set_is_jumping(true);
             touched = 1;
         }
     }
@@ -130,7 +137,7 @@ int Game::entity_collision(Player &plyr, int i, int j, std::pair<int, int> dim)
             //landed on this ledge, stop any jump velocity
             plyr.set_dy(0);
             plyr.set_on_ground(true);
-            plyr.set_is_jumping(false);
+            //plyr.set_is_jumping(false);
             touched = 2;
         }
     }
@@ -162,15 +169,24 @@ int Game::entity_collision(Player &plyr, int i, int j, std::pair<int, int> dim)
 
 }
 
+bool Game::check_tile_collision(const sf::Sprite &sprite, const sf::Sprite &tile_sprite)
+{
+    sf::FloatRect sprite_bounds = sprite.getGlobalBounds();
+    sf::FloatRect tile_bounds = tile_sprite.getGlobalBounds();
+
+    return sprite_bounds.intersects(tile_bounds);
+}
+
+
 void Game::collision_handler()
 {
     int x, y;
-    for (x = 0; x < MAP_ROWS; ++x)
+    for (x = 0; x < game_map->get_rows(); ++x)
     {
-        for (y = 0; y < MAP_COLUMNS; ++y)
+        for (y = 0; y < game_map->get_columns(); ++y)
         {
             Tile *current_tile = &game_map->get_tile_map()->at(x).at(y);
-            if (check_tile_collision(get_player()->get_sprite(), *current_tile->get_sprite()))
+            if (check_tile_collision(player.get_sprite(), *current_tile->get_sprite()))
             {
                 // Check for a coin
                 if (current_tile->get_value() == 5)
@@ -180,83 +196,60 @@ void Game::collision_handler()
             }
 
 
-            entity_collision(*get_player(), x, y, {PLAYER_WIDTH, PLAYER_HEIGHT});
+            entity_collision(player, x, y, {PLAYER_WIDTH, PLAYER_HEIGHT});
         }
     }
 }
 
-void Game::enemy_collision_handler()
-{
-    int x, y, z;
-    for (x = 0; x < MAP_ROWS; ++x)
-    {
-        for (y = 0; y < MAP_COLUMNS; ++y)
-        {
-            for (auto &enemy : *enemy_handler.get_enemies())
-            {
-                entity_collision(*enemy, x, y, {ENEMY_WIDTH, ENEMY_HEIGHT});            
-            }
-        }
-    }    
-}
 
-Game::Game(sf::RenderWindow *window, int width, int height, const char *file_name)
-{
-    this->window = window;
-    enemy_handler = EnemyHandler(window);
-    if (!map_sprite_texture.loadFromFile(file_name))
-    {
-        std::cerr << "Game(): Failed to load tile sheet." << std::endl;
-        exit(1);
-    }
-
-    player = std::make_shared<Player>();
-    game_map = std::make_shared<Map>(window, MAP_ROWS, MAP_COLUMNS,
-                                map_sprite_texture, TILE_SIZE,
-                                &world::coordinate_map, file_name,
-                                NUM_TILES);
-    background = std::make_shared<Background>("1330857.jpg", *window);
-    
-    enemy_handler.allocate_enemies(10, 800, 800);
-
-    game_view.setSize(width / 2, height / 2);
-}
 
 void Game::draw()
 {
-    window->setView(game_view);
-    background->draw();
 
-    player->draw(*window);
-    enemy_handler.draw_enemies();
+    background->draw();
     game_map->draw();
 
-    window->setView(window->getDefaultView());
+    player.draw(*window);
+    enemy_handler.draw_enemies();
+
+    window->setView(game_view);
+    //window->setView(window->getDefaultView());
 }
 
 void Game::update()
 {
-    get_player()->update();
+    player.update();
     enemy_handler.update_enemies();
     collision_handler();
     enemy_collision_handler();
 
     // Testing
-    if (player_landed_on_enemy(*get_player(), {PLAYER_WIDTH, PLAYER_HEIGHT}))
+    if (player_landed_on_enemy(player, {PLAYER_WIDTH, PLAYER_HEIGHT}))
     {
-        get_player()->set_dy(JUMP_HEIGHT / 2);
+        player.set_dy(JUMP_HEIGHT / 2);
     }
 
-    game_view.setCenter(get_player()->get_x(), get_player()->get_y());
-}
 
+    game_view.setCenter(get_player().get_x() + PLAYER_WIDTH / 2, get_player().get_y() + PLAYER_HEIGHT / 2);
+}
 
 
 int main()
 { 
-
     sf::RenderWindow window(sf::VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT), "Test Game");
-    Game game(&window, SCREEN_WIDTH, SCREEN_HEIGHT, "tile_sheet.png");
+
+    sf::Texture tileset;
+    if (!tileset.loadFromFile("tile_sheet.png"))
+    {
+        return -1;
+    }
+
+    Map map(&window, world::coordinate_map.size(), world::coordinate_map.at(0).size(),
+            tileset, TILE_SIZE,
+            &world::coordinate_map, "tile_sheet.png",
+            NUM_TILES + 1);
+
+    Game game(&window, &map);
 
     while (window.isOpen())
     {
@@ -268,13 +261,15 @@ int main()
                 window.close();
             }
         }
+        game.update();
 
-        configurations::delay(DELAY_TIME-1000);
-        window.clear(sf::Color::White);
+        window.clear();
 
         game.draw();
-        game.update();
+
+        //std::cout << game.get_player().get_on_ground() << std::endl;
         window.display();
+        configurations::delay();
     }
     return 0;
 }

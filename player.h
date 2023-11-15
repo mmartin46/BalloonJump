@@ -13,7 +13,7 @@
 
 constexpr int PLAYER_SPEED = 6;
 constexpr int DEFAULT_PLAYER_X = 250;
-constexpr int DEFAULT_PLAYER_Y = 0;
+constexpr int DEFAULT_PLAYER_Y = 500;
 constexpr int PLAYER_GRAVITY = 2;
 constexpr int JUMP_HEIGHT = -20;
 
@@ -88,7 +88,7 @@ class Player : public virtual Entity
 
 void Player::apply_gravity(bool gravity_switch)
 {
-    if (gravity_switch)
+    if (gravity_switch == false)
     {
         
         set_dy(get_dy() + PLAYER_GRAVITY);
@@ -102,11 +102,7 @@ void Player::apply_gravity(bool gravity_switch)
 
 void Player::jump()
 {
-    if (get_on_ground() && !is_jumping)
-    {
-        set_dy(JUMP_HEIGHT);
-        is_jumping = true;
-    }
+    set_dy(JUMP_HEIGHT);
 }
 
 void Player::update()
@@ -114,6 +110,18 @@ void Player::update()
     ++timer;
     using sf::Keyboard;
     configurations::delay(FRAME_DELAY);
+
+    // Check if the player is on the ground
+    if (get_y() >= SCREEN_HEIGHT - PLAYER_HEIGHT)
+    {
+        set_on_ground(true);
+        set_dy(0); // Stop falling
+        set_y(SCREEN_HEIGHT - PLAYER_HEIGHT); // Ensure the player is on the ground
+    }
+    else
+    {
+        set_on_ground(false);
+    }
 
     if (Keyboard::isKeyPressed(sf::Keyboard::Up))
     {
@@ -146,18 +154,10 @@ void Player::update()
         }
     }
 
-
     apply_gravity(get_on_ground());
-
-
-
 
     this->set_x(this->get_x() + this->get_dx());
     this->set_y(this->get_y() + this->get_dy());
-
-    // std::cout << "player()->dy" <<this->get_dy() << std::endl;
-    // std::cout << "player()->is_jumping " <<this->get_is_jumping() << std::endl;
-    // std::cout << "player()->is_pn_ground " <<this->get_on_ground() << std::endl;
 
 
     sprites.at(frame).setPosition(get_x(), get_y());
@@ -189,6 +189,7 @@ Player::Player(int x, int y)
     sprites = std::vector<sf::Sprite>();
     frame = 0;
 
+    on_ground = false;
     init_sprites(PLAYER_WIDTH, PLAYER_HEIGHT, 
                 PLAYER_DEFAULT_ROWS, PLAYER_DEFAULT_COLS);
 }
@@ -201,6 +202,7 @@ Player::Player()
     sprites = std::vector<sf::Sprite>();
     frame = 0;
 
+    on_ground = false;
     init_sprites(PLAYER_WIDTH, PLAYER_HEIGHT, 4, 4);
 }
 
@@ -208,6 +210,7 @@ void Player::init_sprites(int player_width, int player_height,
                             int player_sprite_rows, int player_sprite_cols,
                             const char *file_name)
 {
+    sprites.clear();
     if (!texture.loadFromFile(file_name))
     {
         exit(1);
