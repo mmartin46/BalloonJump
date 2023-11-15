@@ -14,7 +14,14 @@ class Background
         sf::Sprite get_background_image() { return background_image; }
         void set_texture(const char* file_name);
         void draw();
+        void scroll(float offset_x, float offset_y);
+        void adjust_size_to_window();
 };
+
+void Background::scroll(float offset_x, float offset_y)
+{
+    background_image.move(offset_x, offset_y);
+}
 
 Background::Background(const char *file_name, sf::RenderWindow &window)
 {
@@ -30,6 +37,7 @@ void Background::set_texture(const char *file_name)
         exit(EXIT_FAILURE);
     } 
     background_image = sf::Sprite(texture);
+    background_image.setPosition(-300, -100);
 }
 
 void Background::draw()

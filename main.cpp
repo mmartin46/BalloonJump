@@ -222,6 +222,7 @@ void Game::update()
     enemy_handler.update_enemies();
     collision_handler();
     enemy_collision_handler();
+    background->scroll(player.get_dx(), 0);
 
     // Testing
     if (player_landed_on_enemy(player, {PLAYER_WIDTH, PLAYER_HEIGHT}))
