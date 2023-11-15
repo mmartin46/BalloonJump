@@ -31,12 +31,23 @@ class EnemyHandler
 
 void EnemyHandler::update_stomped_enemies()
 {
+    std::random_device rand_dev;
+    std::default_random_engine engine(rand_dev());
+    std::uniform_int_distribution<int> rand_x_pos(100, 5000);
+    std::uniform_int_distribution<int> rand_y_pos(100, 5000);
+    
+    int x_pos = rand_x_pos(engine);
+    int y_pos = rand_y_pos(engine);
+
+
     auto it = get_enemies()->begin();
     for (; it != get_enemies()->end(); ++it)
     {
         if ((*it)->get_stomped_on())
         {
-            it = get_enemies()->erase(it);
+            (*it)->set_x(x_pos);
+            (*it)->set_y(y_pos);
+            (*it)->set_stomped_on(false);
             break;
         }
     }
@@ -56,8 +67,8 @@ vector<std::shared_ptr<Enemy>> EnemyHandler::allocate_enemies(const int NUM_ENEM
 {
     std::random_device rand_dev;
     std::default_random_engine engine(rand_dev());
-    std::uniform_int_distribution<int> rand_x_pos(0, x_boundary);
-    std::uniform_int_distribution<int> rand_y_pos(0, y_boundary);
+    std::uniform_int_distribution<int> rand_x_pos(100, x_boundary);
+    std::uniform_int_distribution<int> rand_y_pos(100, y_boundary);
 
     for (int i = 0; i < NUM_ENEMIES; ++i)
     {
