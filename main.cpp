@@ -61,6 +61,8 @@ Game::Game(sf::RenderWindow *window, Map *map) : window(window), game_map(map), 
     background = std::make_shared<Background>("1330857.jpg", *window);
     enemy_handler = EnemyHandler(window);
 
+    header.set_string("THIS IS A TEST");
+
     enemy_handler.allocate_enemies(30, 5000, 100);
     game_view.setSize(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2);
 }
@@ -227,13 +229,14 @@ void Game::update()
     collision_handler();
     enemy_collision_handler();
     background->scroll(player.get_dx(), player.get_dy());
-    header.scroll(player.get_dx() * 0, player.get_dy() * 0);
+    header.scroll(player.get_dx(), player.get_dy());
     // Testing
     if (player_landed_on_enemy(player, {PLAYER_WIDTH, PLAYER_HEIGHT}))
     {
         player.set_dy(JUMP_HEIGHT / 2);
     }
 
+    std::cout << player.get_dy() << std::endl;
 
     game_view.setCenter(get_player().get_x() + PLAYER_WIDTH / 2, get_player().get_y() + PLAYER_HEIGHT / 2);
 }

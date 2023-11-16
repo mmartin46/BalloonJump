@@ -26,6 +26,7 @@ class GameHeader
 void GameHeader::scroll(int offset_x, int offset_y)
 {
     player_sprite.move(offset_x, offset_y);
+    header_string.move(offset_x, offset_y);
 }
 
 void GameHeader::set_sprite()
@@ -54,6 +55,7 @@ GameHeader::GameHeader(sf::RenderWindow *window, const char* font_file)
     header_string.setFont(font);
     header_string.setCharacterSize(FONT_SIZE);
     header_string.setFillColor(sf::Color::White);
+    header_string.setPosition(PLAYER_ICON_X + 100, PLAYER_ICON_Y);
 }
 
 void GameHeader::draw()
