@@ -102,7 +102,11 @@ void Player::apply_gravity(bool gravity_switch)
 
 void Player::jump()
 {
-    set_dy(JUMP_HEIGHT);
+    if ((get_dy() == 0) && get_on_ground())
+    {
+        set_dy(JUMP_HEIGHT);
+        set_on_ground(false);
+    }
 }
 
 void Player::update()
@@ -112,15 +116,10 @@ void Player::update()
     configurations::delay(FRAME_DELAY);
 
     // Check if the player is on the ground
-    if (get_y() >= SCREEN_HEIGHT - PLAYER_HEIGHT)
+    if (get_on_ground())
     {
         set_on_ground(true);
         set_dy(0); // Stop falling
-        set_y(SCREEN_HEIGHT - PLAYER_HEIGHT); // Ensure the player is on the ground
-    }
-    else
-    {
-        set_on_ground(false);
     }
 
     if (Keyboard::isKeyPressed(sf::Keyboard::Up))
