@@ -118,8 +118,12 @@ Map::Map(sf::RenderWindow *window, int rows, int cols, sf::Texture tileset, int 
     set_tile_size(tile_size);
     set_number_of_tiles(number_of_tiles);
 
+
+
     this->tileset = tileset;
     this->tile_size = tile_size;
+
+
 
 
     this->tile_map = Matrix<Tile>(rows, vector<Tile>(columns));
