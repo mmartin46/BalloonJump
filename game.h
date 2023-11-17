@@ -230,8 +230,22 @@ void Game::update()
     enemy_handler.update_enemies(&player);
     collision_handler();
     enemy_collision_handler();
-    background->scroll(player.get_dx(),(int) player.get_dy() % 1);
-    header.scroll(player.get_dx() ,(int) player.get_dy() % 1);
+
+    static float background_dy;
+
+    background_dy = player.get_dy();
+    if (background_dy >= 1)
+    {
+        background_dy = 1;
+    }
+    else if (background_dy <= -1)
+    {
+        background_dy = -1;
+    }
+
+
+    background->scroll(player.get_dx(),(int) background_dy);
+    header.scroll(player.get_dx() , background_dy);
     // Testing
     if (player_landed_on_enemy(player, {PLAYER_WIDTH, PLAYER_HEIGHT}))
     {
