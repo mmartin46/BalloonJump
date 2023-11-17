@@ -29,7 +29,7 @@ constexpr int PLAYER_DEFAULT_COLS = 4;
 
 #define PLAYER_RUNNING_FRAMES(timer) (timer % 3) + 4
 #define PLAYER_IDLE_FRAMES(timer) timer % 3
-
+#define PLAYER_JUMP_FRAME 8
 
 constexpr int DELAY_TIME = 10000;
 constexpr int FRAME_DELAY = 500;
@@ -102,10 +102,10 @@ void Player::apply_gravity(bool gravity_switch)
 
 void Player::jump()
 {
-    if ((get_dy() == 0) && get_on_ground())
+    if (get_on_ground())
     {
-        set_dy(JUMP_HEIGHT);
         set_on_ground(false);
+        set_dy(JUMP_HEIGHT);
     }
 }
 
@@ -116,15 +116,14 @@ void Player::update()
     configurations::delay(FRAME_DELAY);
 
     // Check if the player is on the ground
-    if (get_on_ground())
-    {
-        set_on_ground(true);
-        set_dy(0); // Stop falling
-    }
+    // if (get_on_ground())
+    // {
+    //     set_dy(0); // Stop falling
+    // }
 
     if (Keyboard::isKeyPressed(sf::Keyboard::Up))
     {
-        frame = 8;
+        frame = PLAYER_JUMP_FRAME;
         this->jump();
     }
 

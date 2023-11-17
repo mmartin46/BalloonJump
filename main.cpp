@@ -61,7 +61,7 @@ Game::Game(sf::RenderWindow *window, Map *map) : window(window), game_map(map), 
     background = std::make_shared<Background>("1330857.jpg", *window);
     enemy_handler = EnemyHandler(window);
 
-    header.set_string("THIS IS A TEST");
+    header.set_string("Player");
 
     enemy_handler.allocate_enemies(30, 5000, 100);
     game_view.setSize(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2);
@@ -125,8 +125,8 @@ int Game::entity_collision(Player &plyr, int i, int j, std::pair<int, int> dim)
 
             // bumped our head, stop any jump velocity
             //plyr.set_dy(0);
-            //plyr.set_on_ground(false);
-            //plyr.set_is_jumping(true);
+            plyr.set_on_ground(false);
+            plyr.set_is_jumping(true);
             touched = 1;
         }
     }
@@ -185,6 +185,7 @@ bool Game::check_tile_collision(const sf::Sprite &sprite, const sf::Sprite &tile
 
 void Game::collision_handler()
 {
+    player.set_on_ground(false);
     int x, y;
     for (x = 0; x < game_map->get_rows(); ++x)
     {
@@ -198,6 +199,7 @@ void Game::collision_handler()
                 {
                     game_map->get_tile_map()->at(x).at(y).set_value(0);
                 }
+                player.set_on_ground(true);
             }
 
 
@@ -228,18 +230,22 @@ void Game::update()
     enemy_handler.update_enemies(&player);
     collision_handler();
     enemy_collision_handler();
-    background->scroll(player.get_dx(), player.get_dy());
-    header.scroll(player.get_dx(), player.get_dy());
+    background->scroll(player.get_dx(),(int) player.get_dy() % 1);
+    header.scroll(player.get_dx() ,(int) player.get_dy() % 1);
     // Testing
     if (player_landed_on_enemy(player, {PLAYER_WIDTH, PLAYER_HEIGHT}))
     {
         player.set_dy(JUMP_HEIGHT / 2);
     }
 
-    std::cout << player.get_dy() << std::endl;
 
     game_view.setCenter(get_player().get_x() + PLAYER_WIDTH / 2, get_player().get_y() + PLAYER_HEIGHT / 2);
 }
+
+class MapHandler
+{
+    
+};
 
 
 int main()

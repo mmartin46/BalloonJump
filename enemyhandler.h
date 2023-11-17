@@ -68,7 +68,7 @@ vector<std::shared_ptr<Enemy>> EnemyHandler::allocate_enemies(const int NUM_ENEM
     std::random_device rand_dev;
     std::default_random_engine engine(rand_dev());
     std::uniform_int_distribution<int> rand_x_pos(100, x_boundary);
-    std::uniform_int_distribution<int> rand_y_pos(100, y_boundary);
+    std::uniform_int_distribution<int> rand_y_pos(-100, y_boundary);
 
     for (int i = 0; i < NUM_ENEMIES; ++i)
     {
