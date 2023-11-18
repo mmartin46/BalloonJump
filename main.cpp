@@ -15,8 +15,9 @@ int main()
             tileset, TILE_SIZE,
             &world::coordinate_map, "textures/tile_sheet.png",
             NUM_TILES + 1);
+    vector<Map> maps = { map };
 
-    Game game(&window, &map);
+    Game game(&window, &maps.at(0));
 
     while (window.isOpen())
     {
