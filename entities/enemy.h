@@ -81,15 +81,7 @@ void Enemy::update()
     this->set_x(this->get_x() + this->get_dx());
     this->set_y(this->get_y() + this->get_dy());
 
-    // Goes out of scope
-    if (this->get_x() > SCREEN_WIDTH)
-    {
-        this->set_x(0);
-    }
-    if (this->get_y() > SCREEN_HEIGHT)
-    {
-        this->set_y(0);
-    }
+
 
     frame = ENEMY_FRAMES(timer);
     sprites.at(frame).setPosition(get_x(), get_y());

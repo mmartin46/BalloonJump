@@ -2,9 +2,11 @@
 #include <vector>
 #include <random>
 #include <memory>
-#include "enemy.h"
+#include "entities/enemy.h"
 
 using std::vector;
+
+constexpr int DISTANCE_BETWEEN_ENEMIES = 100;
 
 class EnemyHandler
 {
@@ -16,7 +18,7 @@ class EnemyHandler
         EnemyHandler(sf::RenderWindow *window) : window_ptr(window)
         {}
         // Allocates the needed number of enemies for the game
-        vector<std::shared_ptr<Enemy>> allocate_enemies(const int NUM_ENEMIES, int x_boundary, int y_boundary);
+        vector<std::shared_ptr<Enemy>> allocate_enemies(const int NUM_ENEMIES, int min_x, int max_x, int min_y, int max_y);
         
         void update_stomped_enemies(Player *player); 
         // Updates all the enemies
@@ -31,8 +33,8 @@ class EnemyHandler
 
 void EnemyHandler::update_stomped_enemies(Player *player)
 {
-    std::random_device rand_dev;
-    std::default_random_engine engine(rand_dev());
+    static std::random_device rand_dev;
+    static std::mt19937 engine(rand_dev());
     std::uniform_int_distribution<int> rand_x_offset(900, 1500);
     std::uniform_int_distribution<int> rand_y_offset(0, 400);
     
@@ -63,17 +65,19 @@ std::shared_ptr<Enemy> EnemyHandler::get_enemy(int idx)
     return enemies.at(idx);
 }
 
-vector<std::shared_ptr<Enemy>> EnemyHandler::allocate_enemies(const int NUM_ENEMIES, int x_boundary, int y_boundary)
+vector<std::shared_ptr<Enemy>> EnemyHandler::allocate_enemies(const int NUM_ENEMIES, int min_x, int max_x, int min_y, int max_y)
 {
-    std::random_device rand_dev;
-    std::default_random_engine engine(rand_dev());
-    std::uniform_int_distribution<int> rand_x_pos(100, x_boundary);
-    std::uniform_int_distribution<int> rand_y_pos(-100, y_boundary);
+    static std::random_device rand_dev;
+    static std::default_random_engine engine(rand_dev());
+    std::uniform_int_distribution<int> rand_x_pos(min_x, max_x + DISTANCE_BETWEEN_ENEMIES);
+    std::uniform_int_distribution<int> rand_y_pos(min_y, max_y + DISTANCE_BETWEEN_ENEMIES);
 
     for (int i = 0; i < NUM_ENEMIES; ++i)
     {
         int x_pos = rand_x_pos(engine);
         int y_pos = rand_y_pos(engine);
+
+        std::cout << x_pos << std::endl;
 
         enemies.push_back(std::make_shared<Enemy>(x_pos, y_pos));
     }

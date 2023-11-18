@@ -1,10 +1,10 @@
 #pragma once
 #include "map.h"
-#include "player.h"
+#include "entities/player.h"
 
 #include <SFML/Graphics.hpp>
 #include "map.h"
-#include "player.h"
+#include "entities/player.h"
 #include "background.h"
 #include <memory>
 #include "enemyhandler.h"
@@ -13,7 +13,9 @@
 #define PLAYER_INIT_X 100
 #define PLAYER_INIT_Y 100
 
-
+constexpr int MAX_ENEMY_X = 5000;
+constexpr int MAX_ENEMY_Y = -2000;
+constexpr int ENEMY_COUNT = 30;
 
 class Game
 {
@@ -63,7 +65,7 @@ Game::Game(sf::RenderWindow *window, Map *map) : window(window), game_map(map), 
 
     header.set_string("Player");
 
-    enemy_handler.allocate_enemies(30, 5000, 100);
+    enemy_handler.allocate_enemies(ENEMY_COUNT, 1000, MAX_ENEMY_X, -3000, MAX_ENEMY_Y);
     game_view.setSize(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2);
 }
 
@@ -102,7 +104,7 @@ int Game::entity_collision(Player &plyr, int i, int j, std::pair<int, int> dim)
     float bx = tiles.at(i).at(j).get_x(), by = tiles.at(i).at(j).get_y();
     float bw = TILE_SIZE, bh = TILE_SIZE;
 
-    if (tiles.at(i).at(j).get_value() == 0)
+    if ((tiles.at(i).at(j).get_value() == 0) || (tiles.at(i).at(j).get_value() == 5))
     {
         return 0;
     }

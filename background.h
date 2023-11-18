@@ -1,5 +1,5 @@
 #pragma once
-#include "entity.h"
+#include "entities/entity.h"
 #include <iostream>
 #include <SFML/Graphics.hpp>
 
