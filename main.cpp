@@ -6,7 +6,7 @@ int main()
     sf::RenderWindow window(sf::VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT), "Test Game");
 
     sf::Texture tileset;
-    if (!tileset.loadFromFile("tile_sheet.png"))
+    if (!tileset.loadFromFile("textures/tile_sheet.png"))
     {
         return -1;
     }
