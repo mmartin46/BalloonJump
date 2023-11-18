@@ -13,7 +13,7 @@ int main()
 
     Map map(&window, world::coordinate_map.size(), world::coordinate_map.at(0).size(),
             tileset, TILE_SIZE,
-            &world::coordinate_map, "tile_sheet.png",
+            &world::coordinate_map, "textures/tile_sheet.png",
             NUM_TILES + 1);
 
     Game game(&window, &map);
