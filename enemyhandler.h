@@ -22,9 +22,9 @@ class EnemyHandler
         
         void update_stomped_enemies(Player *player); 
         // Updates all the enemies
-        void update_enemies(Player *player);
+        void update_enemies(Player *player) noexcept;
         // Draws all the enemies
-        void draw_enemies();
+        void draw_enemies() noexcept;
 
         // Returns a pointer to an enemy.
         std::shared_ptr<Enemy> get_enemy(int idx);
@@ -84,7 +84,7 @@ vector<std::shared_ptr<Enemy>> EnemyHandler::allocate_enemies(const int NUM_ENEM
     return enemies;
 }
 
-void EnemyHandler::draw_enemies()
+void EnemyHandler::draw_enemies() noexcept
 {
     typename vector<std::shared_ptr<Enemy>>::pointer enemy, enemy_end = enemies.data() + enemies.size();
     for (enemy = enemies.data(); enemy < enemy_end; ++enemy)
@@ -93,7 +93,7 @@ void EnemyHandler::draw_enemies()
     }
 }
 
-void EnemyHandler::update_enemies(Player *player)
+void EnemyHandler::update_enemies(Player *player) noexcept
 {
     typename vector<std::shared_ptr<Enemy>>::pointer enemy, enemy_end = enemies.data() + enemies.size();
     for (enemy = enemies.data(); enemy < enemy_end; ++enemy)
