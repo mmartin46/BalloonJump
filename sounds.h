@@ -24,7 +24,7 @@ class AudioHandler
         unordered_map<string, sf::Sound> sounds;
         
     public:
-        AudioHandler() {};
+        AudioHandler() = default;
 
         void load_track(const string &custom_name, const string &file_path);
         void play_track(const string &name);
