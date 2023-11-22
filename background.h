@@ -15,7 +15,6 @@ class Background
         void set_texture(const char* file_name);
         void draw();
         void scroll(float offset_x, float offset_y);
-        void adjust_size_to_window();
 };
 
 void Background::scroll(float offset_x, float offset_y)
