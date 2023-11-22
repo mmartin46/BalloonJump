@@ -35,11 +35,10 @@ class AudioHandler
         void set_volume(const string &name, float volume);
 
 
-        // FIXME: Needs to be implemented
         void load_sound(const string &custom_name, const string &file_path);
         void play_sound(const string &name);
         void pause_sound(const string &name);
-        void stop_sound();
+        void stop_sound(const string &name);
 };
 
 void AudioHandler::stop_music()
@@ -163,5 +162,86 @@ void AudioHandler::set_volume(const string &name, float volume)
     catch(const std::exception& e)
     {
         std::cerr << "AudioHandler::set_volume(): " << e.what() << '\n';
+    }
+}
+
+
+void AudioHandler::load_sound(const string &custom_name, const string &file_path)
+{
+    try
+    {
+        sf::SoundBuffer buffer;
+        if (buffer.loadFromFile(file_path))
+        {
+            sound_buffers.at(custom_name) = buffer;
+        }
+        else
+        {
+            throw std::runtime_error("AudioHandler::load_sound(): Invalid Path \"" + file_path + "\"");
+        }
+    }
+    catch(const std::exception& e)
+    {
+        std::cerr << "AudioHandler::load_sound(): " << e.what() << '\n';
+    }
+    
+}
+void AudioHandler::play_sound(const string &name)
+{
+    try
+    {
+        auto it = sounds.find(name);
+        if (it != sounds.end())
+        {
+            it->second.play();
+        }
+        else
+        {
+            throw std::runtime_error("AudioHandler::pause_sound(): Invalid Name \"" + name + "\"");
+        }
+    }
+    catch(const std::exception& e)
+    {
+        std::cerr << "AudioHandler::pause_sound(): " << e.what() << '\n';
+    }
+    
+}
+void AudioHandler::pause_sound(const string &name)
+{
+    try
+    {
+        auto it = sounds.find(name);
+        if (it != sounds.end())
+        {
+            it->second.pause();
+        }
+        else
+        {
+            throw std::runtime_error("AudioHandler::pause_sound(): Invalid Name \"" + name + "\"");
+        }
+    }
+    catch(const std::exception& e)
+    {
+        std::cerr << "AudioHandler::pause_sound(): " << e.what() << '\n';
+    }
+    
+}
+void AudioHandler::stop_sound(const string &name)
+{
+    try
+    {
+        auto it = sounds.find(name);
+        if (it != sounds.end())
+        {
+            it->second.pause();
+        }
+        else
+        {
+            throw std::runtime_error("AudioHandler::pause_sound(): Invalid Name \"" + name + "\"");
+        }
+    }
+    catch(const std::exception& e)
+    {
+        std::cerr << "AudioHandler::pause_sound(): " << e.what() << '\n';
     }
 }
