@@ -20,7 +20,7 @@ class AudioHandler
     private:
         unordered_map<string, unique_ptr<sf::Music>> tracks;
 
-        unordered_map<string, sf::SoundBuffer> sound_buffers;
+        unordered_map<string, unique_ptr<sf::SoundBuffer>> sound_buffers;
         unordered_map<string, sf::Sound> sounds;
         
     public:
@@ -170,10 +170,10 @@ void AudioHandler::load_sound(const string &custom_name, const string &file_path
 {
     try
     {
-        sf::SoundBuffer buffer;
-        if (buffer.loadFromFile(file_path))
+        auto buffer = make_unique<sf::SoundBuffer>();
+        if (buffer->loadFromFile(file_path))
         {
-            sound_buffers.at(custom_name) = buffer;
+            sound_buffers.at(custom_name) = std::move(buffer);
         }
         else
         {
