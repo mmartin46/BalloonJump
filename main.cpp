@@ -6,6 +6,7 @@ namespace GameMaps
     static vector<Map> maps;
 }
 
+
 int main()
 { 
     sf::RenderWindow window(sf::VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT), "Test Game");
@@ -22,8 +23,6 @@ int main()
             NUM_TILES + 1);
 
     GameMaps::maps.push_back(map);
-    
-
     Game game(&window, &GameMaps::maps.at(0));
 
     while (window.isOpen())

@@ -122,11 +122,11 @@ int Game::entity_collision(Player &plyr, int i, int j, std::pair<int, int> dim)
         if (py < by+bh && py>by && plyr.get_dy() < 0)
         {
             // correct y
-            plyr.set_y((by+bh) + 1);
+            plyr.set_y(by+bh);
             py = by+bh;
 
             // bumped our head, stop any jump velocity
-            //plyr.set_dy(0);
+            plyr.set_dy(0);
             plyr.set_on_ground(false);
             plyr.set_is_jumping(true);
             touched = 1;
@@ -172,6 +172,12 @@ int Game::entity_collision(Player &plyr, int i, int j, std::pair<int, int> dim)
             touched = 4;
         }
     }
+
+    if (touched == 3 || touched == 4)
+    {
+        plyr.set_on_ground(false);
+    }
+
     return touched;
 
 }
