@@ -2,6 +2,7 @@
 
 #include <unordered_map>
 #include <iostream>
+#include <memory>
 #include <SFML/Audio.hpp>
 
 using std::unordered_map;
@@ -24,6 +25,13 @@ class AudioHandler
         unordered_map<string, sf::Sound> sounds;
         
     public:
+        // Returns one instance of the AudioHandler
+        static AudioHandler& get_instance()
+        {
+            static AudioHandler instance;
+            return instance;
+        }
+
         AudioHandler() = default;
 
         void load_track(const string &custom_name, const string &file_path);
@@ -245,3 +253,5 @@ void AudioHandler::stop_sound(const string &name)
         std::cerr << "AudioHandler::pause_sound(): " << e.what() << '\n';
     }
 }
+
+static AudioHandler audio_handler;

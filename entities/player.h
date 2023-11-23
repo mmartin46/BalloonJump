@@ -6,6 +6,7 @@
 #include <utility>
 #include <vector>
 #include "entity.h"
+#include "../sounds.h"
 
 #define SCREEN_WIDTH 1280
 #define SCREEN_HEIGHT 600
@@ -202,6 +203,7 @@ Player::Player()
 
     on_ground = false;
     init_sprites(PLAYER_WIDTH, PLAYER_HEIGHT, 4, 4);
+
 }
 
 void Player::init_sprites(int player_width, int player_height, 
