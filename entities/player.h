@@ -105,6 +105,7 @@ void Player::jump()
 {
     if (get_on_ground())
     {
+        AudioHandler::get_instance().load_sound("jump_sound", "entities//jump.wav");
         AudioHandler::get_instance().play_sound("jump_sound", 80.0F);
         set_on_ground(false);
         set_dy(JUMP_HEIGHT);

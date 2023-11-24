@@ -183,11 +183,11 @@ void AudioHandler::load_sound(const string &custom_name, const string &file_path
         auto buffer = make_unique<sf::SoundBuffer>();
         if (buffer->loadFromFile(file_path))
         {
-            sound_buffers.at(custom_name) = std::move(buffer);
+            sound_buffers.insert(std::make_pair(custom_name, std::move(buffer)));
         }
         else
         {
-            throw std::runtime_error("AudioHandler::load_sound(): Invalid Path \"" + file_path + "\"");
+            throw std::runtime_error("Invalid Path \"" + file_path + "\"");
         }
     }
     catch(const std::exception& e)
@@ -200,20 +200,29 @@ void AudioHandler::play_sound(const string &name, float volume)
 {
     try
     {
-        auto it = sounds.find(name);
-        if (it != sounds.end())
+        auto buffer_it = sound_buffers.find(name);
+        if (buffer_it != sound_buffers.end())
         {
-            it->second.play();
-            it->second.setVolume(volume);
+
+            auto &buffer = *(buffer_it->second);
+
+            // Setup the buffer
+            sf::Sound sound;
+            sound.setBuffer(buffer);
+
+            sound.setVolume(volume);
+            sound.play();
+
+            sounds[name] = std::move(sound);
         }
         else
         {
-            throw std::runtime_error("AudioHandler::pause_sound(): Invalid Name \"" + name + "\"");
+            throw std::runtime_error("AudioHandler::play_sound(): Invalid Name \"" + name + "\"");
         }
     }
     catch(const std::exception& e)
     {
-        std::cerr << "AudioHandler::pause_sound(): " << e.what() << '\n';
+        std::cerr << "AudioHandler::play_sound(): " << e.what() << '\n';
     }
     
 }
