@@ -14,6 +14,7 @@ namespace music_settings
 {
     constexpr int VOLUME_MAX = 100;
     constexpr int VOLUME_MIN = 0;
+    constexpr float DEFAULT_VOLUME = 30;
 }
 
 class AudioHandler
@@ -35,16 +36,16 @@ class AudioHandler
         AudioHandler() = default;
 
         void load_track(const string &custom_name, const string &file_path);
-        void play_track(const string &name);
+        void play_track(const string &name, float volume);
         void pause_track(const string &name);
         void stop_track(const string &name);
         void stop_music();
 
-        void set_volume(const string &name, float volume);
+        void set_volume(const string &name, float volume=music_settings::DEFAULT_VOLUME);
 
 
         void load_sound(const string &custom_name, const string &file_path);
-        void play_sound(const string &name);
+        void play_sound(const string &name, float volume=music_settings::DEFAULT_VOLUME);
         void pause_sound(const string &name);
         void stop_sound(const string &name);
 };
@@ -79,7 +80,7 @@ void AudioHandler::load_track(const string &custom_name, const string &file_path
     
 
 }
-void AudioHandler::play_track(const string &name)
+void AudioHandler::play_track(const string &name, float volume)
 {
     try
     {
@@ -88,6 +89,7 @@ void AudioHandler::play_track(const string &name)
         if (it != tracks.end())
         {
             it->second->play();
+            it->second->setVolume(volume);
         }
         else
         {
@@ -194,7 +196,7 @@ void AudioHandler::load_sound(const string &custom_name, const string &file_path
     }
     
 }
-void AudioHandler::play_sound(const string &name)
+void AudioHandler::play_sound(const string &name, float volume)
 {
     try
     {
@@ -202,6 +204,7 @@ void AudioHandler::play_sound(const string &name)
         if (it != sounds.end())
         {
             it->second.play();
+            it->second.setVolume(volume);
         }
         else
         {
