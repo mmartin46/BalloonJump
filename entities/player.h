@@ -105,6 +105,7 @@ void Player::jump()
 {
     if (get_on_ground())
     {
+        AudioHandler::get_instance().play_sound("jump_sound", 80.0F);
         set_on_ground(false);
         set_dy(JUMP_HEIGHT);
     }
@@ -191,6 +192,8 @@ Player::Player(int x, int y)
     on_ground = false;
     init_sprites(PLAYER_WIDTH, PLAYER_HEIGHT, 
                 PLAYER_DEFAULT_ROWS, PLAYER_DEFAULT_COLS);
+    // FIXME: Add real sound
+    AudioHandler::get_instance().load_sound("jump_sound", "jump.wav");
 }
 Player::Player()
 {
