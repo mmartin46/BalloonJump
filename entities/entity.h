@@ -1,3 +1,5 @@
+#ifndef ENTITY_H
+#define ENTITY_H
 #pragma once
 
 class Entity
@@ -9,3 +11,4 @@ class Entity
         virtual void set_y(double y) = 0;
 };
 
+#endif
