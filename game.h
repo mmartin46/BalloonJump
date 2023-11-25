@@ -7,7 +7,7 @@
 #include "entities/player.h"
 #include "background.h"
 #include <memory>
-#include "enemyhandler.h"
+#include "entities/enemyhandler.h"
 #include "header.h"
 
 #define PLAYER_INIT_X 100

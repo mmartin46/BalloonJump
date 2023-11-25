@@ -2,7 +2,7 @@
 #include <vector>
 #include <random>
 #include <memory>
-#include "entities/enemy.h"
+#include "enemy.h"
 
 using std::vector;
 
