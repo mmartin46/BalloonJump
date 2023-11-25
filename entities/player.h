@@ -8,7 +8,7 @@
 #include <utility>
 #include <vector>
 #include "entity.h"
-#include "../sounds.h"
+#include "../sounds/sounds.h"
 #include "../config.h"
 
 #define SCREEN_WIDTH 1280
