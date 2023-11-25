@@ -13,7 +13,7 @@ Enemy::Enemy(int x, int y)
 
     init_sprites(ENEMY_WIDTH, ENEMY_HEIGHT,
                         ENEMY_DEFAULT_COLS,
-                        "enemy.png");
+                        "entities\\entity_sprites\\enemy.png");
     set_on_ground(false);
 }
 
