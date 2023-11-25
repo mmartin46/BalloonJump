@@ -1,3 +1,5 @@
+#ifndef GAME_H
+#define GAME_H
 #pragma once
 #include "map.h"
 #include "entities/player.h"
@@ -263,3 +265,6 @@ void Game::update()
 
     game_view.setCenter(get_player().get_x() + PLAYER_WIDTH / 2, get_player().get_y() + PLAYER_HEIGHT / 2);
 }
+
+
+#endif

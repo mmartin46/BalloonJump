@@ -1,3 +1,5 @@
+#ifndef TILE_H
+#define TILE_H
 #pragma once
 #include "entities/entity.h"
 
@@ -30,3 +32,5 @@ Tile::Tile() : value(0), x(0), y(0)
 Tile::Tile(int value, int x, int y) : value(value), x(x), y(y)
 {
 }
+
+#endif
