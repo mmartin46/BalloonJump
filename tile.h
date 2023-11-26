@@ -1,6 +1,7 @@
 #ifndef TILE_H
 #define TILE_H
 #pragma once
+#include <SFML/Graphics.hpp>
 #include "entities/entity.h"
 
 
