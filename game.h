@@ -1,16 +1,15 @@
 #ifndef GAME_H
 #define GAME_H
 #pragma once
-#include "map.h"
 #include "entities/player.h"
 
 #include <SFML/Graphics.hpp>
-#include "map.h"
+#include "utils/map.h"
 #include "entities/player.h"
 #include "utils/background.h"
 #include <memory>
 #include "entities/enemyhandler.h"
-#include "header.h"
+#include "utils/header.h"
 
 #define PLAYER_INIT_X 100
 #define PLAYER_INIT_Y 100
