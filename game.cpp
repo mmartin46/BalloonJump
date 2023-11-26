@@ -17,7 +17,7 @@ void Game::enemy_collision_handler()
 
 Game::Game(sf::RenderWindow *window, Map *map) : window(window), game_map(map), player(PLAYER_INIT_X, PLAYER_INIT_Y), header(window)
 {
-    background = std::make_shared<Background>("1330857.jpg", *window);
+    background = std::make_shared<Background>("textures/1330857.jpg", *window);
     enemy_handler = EnemyHandler(window);
 
     header.set_string("Player");

@@ -1,7 +1,7 @@
 #ifndef BACKGROUND_H
 #define BACKGROUND_H
 #pragma once
-#include "entities/entity.h"
+#include "../entities/entity.h"
 #include <iostream>
 #include <SFML/Graphics.hpp>
 
