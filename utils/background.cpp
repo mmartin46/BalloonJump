@@ -2,7 +2,8 @@
 
 void Background::scroll(float offset_x, float offset_y)
 {
-    background_image.move(offset_x, offset_y);
+    sf::Vector2f curr_position = background_image.getPosition();
+    background_image.setPosition(curr_position.x + offset_x, curr_position.y + offset_y);
 }
 
 Background::Background(const char *file_name, sf::RenderWindow &window)
