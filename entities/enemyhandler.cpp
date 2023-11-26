@@ -46,8 +46,6 @@ vector<std::shared_ptr<Enemy>> EnemyHandler::allocate_enemies(const int NUM_ENEM
         int x_pos = rand_x_pos(engine);
         int y_pos = rand_y_pos(engine);
 
-        std::cout << x_pos << std::endl;
-
         enemies.push_back(std::make_shared<Enemy>(x_pos, y_pos));
     }
     return enemies;
