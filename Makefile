@@ -2,7 +2,7 @@
 BOX2D = src/include/*.cpp 
 CONFIGS = game/config.cpp
 SOUNDS = sounds/sounds.cpp
-ENTITIES = entities/player.cpp entities/enemy.cpp entities/enemyhandler.cpp
+ENTITIES = entities/*.cpp
 ALL_ELSE = utils/tile.cpp utils/map.cpp utils/background.cpp utils/header.cpp game/game.cpp
 FLAGS = -lsfml-graphics -lsfml-audio -lsfml-window -lsfml-system -lsfml-main # -mwindows
 run:
