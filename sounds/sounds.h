@@ -26,7 +26,7 @@ class AudioHandler
 
         unordered_map<string, unique_ptr<sf::SoundBuffer>> sound_buffers;
         unordered_map<string, sf::Sound> sounds;
-        
+        AudioHandler() : tracks{}, sound_buffers{}, sounds{} {}
     public:
         // Returns one instance of the AudioHandler
         static AudioHandler& get_instance()
@@ -35,7 +35,7 @@ class AudioHandler
             return instance;
         }
 
-        AudioHandler() = default;
+        
 
         void load_track(const string &custom_name, const string &file_path);
         void play_track(const string &name, float volume);
@@ -43,13 +43,15 @@ class AudioHandler
         void stop_track(const string &name);
         void stop_music();
 
-        void set_volume(const string &name, float volume=music_settings::DEFAULT_VOLUME);
 
 
         void load_sound(const string &custom_name, const string &file_path);
         void play_sound(const string &name, float volume=music_settings::DEFAULT_VOLUME);
         void pause_sound(const string &name);
         void stop_sound(const string &name);
+
+        void print_sounds();
 };
+
 
 #endif

@@ -38,8 +38,8 @@ void AudioHandler::play_track(const string &name, float volume)
         auto it = tracks.find(name);
         if (it != tracks.end())
         {
-            it->second->play();
             it->second->setVolume(volume);
+            it->second->play();
         }
         else
         {
@@ -97,34 +97,6 @@ void AudioHandler::stop_track(const string &name)
         
 }
 
-void AudioHandler::set_volume(const string &name, float volume)
-{
-    try
-    {
-        auto it = tracks.find(name);
-        if (it != tracks.end())
-        {
-            if ((volume <= music_settings::VOLUME_MAX) &&
-                (volume >= music_settings::VOLUME_MIN))
-            {
-                it->second->setVolume(volume);
-            }
-            else
-            {
-                throw std::runtime_error("AudioHandler::set_volume(): Invalid Volume with \"" + name + "\"");
-            }
-        }
-        else
-        {
-            throw std::runtime_error("AudioHandler::set_volume(): Invalid Name \"" + name + "\"");
-        }
-    }
-    catch(const std::exception& e)
-    {
-        std::cerr << "AudioHandler::set_volume(): " << e.what() << '\n';
-    }
-}
-
 
 void AudioHandler::load_sound(const string &custom_name, const string &file_path)
 {
@@ -163,14 +135,7 @@ void AudioHandler::play_sound(const string &name, float volume)
             sound.setVolume(volume);
             sound.play();
 
-            if (sound.getStatus() == sf::Sound::Playing)
-            {
-                sounds[name] = std::move(sound);
-            }
-            else
-            {
-                throw std::runtime_error("Song isn't playing.");
-            }
+            sounds[name] = std::move(sound);
         }
         else
         {
@@ -214,13 +179,43 @@ void AudioHandler::stop_sound(const string &name)
         }
         else
         {
-            throw std::runtime_error("AudioHandler::pause_sound(): Invalid Name \"" + name + "\"");
+            throw std::runtime_error(": Invalid Name \"" + name + "\"");
         }
     }
     catch(const std::exception& e)
     {
-        std::cerr << "AudioHandler::pause_sound(): " << e.what() << '\n';
+        std::cerr << "AudioHandler::stop_sound(): " << e.what() << '\n';
     }
 }
 
-static AudioHandler audio_handler;
+void AudioHandler::print_sounds()
+{
+    const int BAR_WIDTH = 10;
+    std::cout << "Sounds" << std::endl;
+    for (int i = 0; i < BAR_WIDTH; ++i)
+    {
+        std::cout << "-";
+    }
+    std::cout << std::endl;
+
+    for (auto &it : sounds)
+    {
+        std::cout << it.first << " ";
+        switch (it.second.getStatus())
+        {
+            case sf::Sound::Playing:
+                std::cout << "(playing)";
+                break;
+            case sf::Sound::Paused:
+                std::cout << "(paused)";
+                break;
+            case sf::Sound::Stopped:
+                std::cout << "(stopped)";
+                break;
+            default:
+                std::cout << "(unknown debug?)";
+                break;
+        }
+        std::cout << std::endl;
+    }
+}

@@ -7,7 +7,7 @@
 constexpr int FONT_SIZE = 16;
 
 constexpr int PLAYER_ICON_X = -190;
-constexpr int PLAYER_ICON_Y = -10;
+constexpr int PLAYER_ICON_Y = 20;
 constexpr int ICON_TO_STR_OFFSET = 60;
 
 class GameHeader

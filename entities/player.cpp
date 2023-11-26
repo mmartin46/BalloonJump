@@ -19,7 +19,7 @@ void Player::jump()
     if (get_on_ground())
     {
         AudioHandler::get_instance().play_sound("jump_sound", 90.0F);
-
+        AudioHandler::get_instance().print_sounds();
 
         set_on_ground(false);
         set_dy(JUMP_HEIGHT);
