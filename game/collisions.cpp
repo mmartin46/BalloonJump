@@ -16,7 +16,7 @@ bool Game::player_landed_on_enemy(Player &plyr, std::pair<int, int> dim)
 
         if (px + pw > ex && px < ex + ew && py + ph > ey && py < ey)
         {
-            enemies_destroyed++;
+            player.attributes.inc_enem_count();
             enemy->set_stomped_on(true);
             return true;
         }
@@ -137,7 +137,7 @@ void Game::collision_handler()
                 // Check for a coin
                 if (current_tile->get_value() == 5)
                 {
-                    ++coins_collected;
+                    player.attributes.inc_coin_count();
                     game_map->get_tile_map()->at(x).at(y).set_value(0);
                 }
                 player.set_on_ground(true);

@@ -35,7 +35,7 @@ GameHeader::GameHeader(sf::RenderWindow *window, const char* font_file)
     header_string.setFont(font);
     header_string.setCharacterSize(FONT_SIZE);
     header_string.setFillColor(sf::Color::White);
-    header_string.setPosition(PLAYER_ICON_X + 100, PLAYER_ICON_Y);
+    header_string.setPosition(PLAYER_ICON_X + ICON_TO_STR_OFFSET, PLAYER_ICON_Y);
 }
 
 void GameHeader::draw()

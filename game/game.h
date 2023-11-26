@@ -32,8 +32,6 @@ class Game
         GameHeader header;
         EnemyHandler enemy_handler;
         Player player;
-        int coins_collected = 0;
-        int enemies_destroyed = 0;
     public:
         Game(sf::RenderWindow *window, Map *game_map);
         Player get_player() { return player; }

@@ -8,6 +8,7 @@
 #include <utility>
 #include <vector>
 #include "entity.h"
+#include "playerattributes.h"
 #include "../sounds/sounds.h"
 #include "../game/config.h"
 
@@ -52,6 +53,7 @@ class Player : public virtual Entity
         bool facing_right;
         bool is_jumping;
     public:
+        PlayerAttributes attributes;
         Player();
         Player(int x, int y);
         double get_x() override { return x; }
