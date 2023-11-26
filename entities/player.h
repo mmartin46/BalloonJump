@@ -9,7 +9,7 @@
 #include <vector>
 #include "entity.h"
 #include "../sounds/sounds.h"
-#include "../config.h"
+#include "../game/config.h"
 
 #define SCREEN_WIDTH 1280
 #define SCREEN_HEIGHT 600

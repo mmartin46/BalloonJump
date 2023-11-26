@@ -18,7 +18,7 @@ class GameHeader
         sf::RenderWindow *window;
         sf::Sprite player_sprite;
     public:
-        GameHeader(sf::RenderWindow *window, const char* font_file="Raleway-Medium.ttf");
+        GameHeader(sf::RenderWindow *window, const char* font_file="fonts/Raleway-Medium.ttf");
         void set_sprite();
         inline void set_string(std::string str) { header_string.setString(str); };
         void draw();
