@@ -16,6 +16,7 @@ bool Game::player_landed_on_enemy(Player &plyr, std::pair<int, int> dim)
 
         if (px + pw > ex && px < ex + ew && py + ph > ey && py < ey)
         {
+            enemies_destroyed++;
             enemy->set_stomped_on(true);
             return true;
         }
