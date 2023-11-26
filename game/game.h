@@ -2,6 +2,7 @@
 #define GAME_H
 #pragma once
 
+#include <string>
 #include <SFML/Graphics.hpp>
 #include "../utils/map.h"
 #include "../entities/player.h"
@@ -17,6 +18,8 @@ constexpr int MAX_ENEMY_X = 5000;
 constexpr int MAX_ENEMY_Y = -2000;
 constexpr int ENEMY_COUNT = 30;
 
+using std::to_string;
+
 class Game
 {
     private:
@@ -29,6 +32,7 @@ class Game
         GameHeader header;
         EnemyHandler enemy_handler;
         Player player;
+        int coins_collected = 0;
     public:
         Game(sf::RenderWindow *window, Map *game_map);
         Player get_player() { return player; }

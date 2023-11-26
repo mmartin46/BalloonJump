@@ -136,6 +136,7 @@ void Game::collision_handler()
                 // Check for a coin
                 if (current_tile->get_value() == 5)
                 {
+                    ++coins_collected;
                     game_map->get_tile_map()->at(x).at(y).set_value(0);
                 }
                 player.set_on_ground(true);

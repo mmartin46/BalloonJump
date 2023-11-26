@@ -17,10 +17,11 @@ void Game::enemy_collision_handler()
 
 Game::Game(sf::RenderWindow *window, Map *map) : window(window), game_map(map), player(PLAYER_INIT_X, PLAYER_INIT_Y), header(window)
 {
+
     background = std::make_shared<Background>("textures/1330857.jpg", *window);
     enemy_handler = EnemyHandler(window);
 
-    header.set_string("Player");
+    header.set_string("x" + (to_string(coins_collected)));
 
     enemy_handler.allocate_enemies(ENEMY_COUNT, 1000, MAX_ENEMY_X, -3000, MAX_ENEMY_Y);
     game_view.setSize(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2);
@@ -30,6 +31,7 @@ Game::Game(sf::RenderWindow *window, Map *map) : window(window), game_map(map), 
 void Game::draw()
 {
 
+    header.set_string("x" + (to_string(coins_collected)));
     background->draw();
     game_map->draw();
 
