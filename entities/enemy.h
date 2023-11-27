@@ -25,7 +25,7 @@ class Enemy : public Player
         bool on_ground;
         bool facing_right;
     public:
-        Enemy(int x, int y);
+        explicit Enemy(int x, int y);
         virtual void update() override;
         void draw(sf::RenderWindow &window) override;
 

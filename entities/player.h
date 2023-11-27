@@ -54,8 +54,8 @@ class Player : public virtual Entity
         bool is_jumping;
     public:
         PlayerAttributes attributes;
-        Player();
-        Player(int x, int y);
+        explicit Player();
+        explicit Player(int x, int y);
         double get_x() override { return x; }
         void set_x(double x) override { this->x = x; }
         double get_y() override { return y; }

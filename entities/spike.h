@@ -6,7 +6,7 @@
 class Spike : public Enemy
 {
     public:
-        Spike() = default;
+        explicit Spike() = default;
         void update() override;
 };
 
