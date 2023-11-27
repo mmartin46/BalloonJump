@@ -26,10 +26,10 @@ class Enemy : public Player
         bool facing_right;
     public:
         Enemy(int x, int y);
-        void update() override;
+        virtual void update() override;
         void draw(sf::RenderWindow &window) override;
 
-        void init_sprites(int player_width, int player_height, int num_sprites, const char *file_name);
+        virtual void init_sprites(int player_width, int player_height, int num_sprites, const char *file_name);
 
         void set_stomped_on(bool status) { stomped_on = status; }
         bool get_stomped_on() { return stomped_on; }

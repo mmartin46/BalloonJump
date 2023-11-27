@@ -135,7 +135,15 @@ void AudioHandler::play_sound(const string &name, float volume)
             sound.setVolume(volume);
             sound.play();
 
-            sounds[name] = std::move(sound);
+            if (sound.getStatus() == sf::Sound::Playing)
+            {
+                std::cout << "Sound Playing: " << name << std::endl;
+                sounds[name] = std::move(sound);
+            }
+            else
+            {
+                throw std::runtime_error("Failed to play");
+            }
         }
         else
         {
