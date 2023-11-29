@@ -25,9 +25,10 @@ class Enemy : public Player
         bool on_ground;
         bool facing_right;
     public:
+        explicit Enemy() = default;
         explicit Enemy(int x, int y);
         virtual void update() override;
-        void draw(sf::RenderWindow &window) override;
+        virtual void draw(sf::RenderWindow &window) override;
 
         virtual void init_sprites(int player_width, int player_height, int num_sprites, const char *file_name);
 
