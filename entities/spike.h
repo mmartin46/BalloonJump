@@ -7,7 +7,8 @@ constexpr int SPIKE_SPEED = 10;
 constexpr int SPIKE_DEFAULT_ROWS = 1;
 constexpr int SPIKE_DEFAULT_COLS = 1;
 
-// FIXME: Not finished
+#define SPIKE_FRAME 0
+
 class Spike : public Enemy
 {
     private:

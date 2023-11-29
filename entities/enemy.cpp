@@ -70,7 +70,6 @@ void Enemy::draw(sf::RenderWindow &window)
 
 void Enemy::init_sprites(int player_width, int player_height, int num_sprites, const char *file_name)
 {
-    // FIXME: Not finished
     if (!texture.loadFromFile(file_name))
     {
         exit(1);

@@ -30,7 +30,6 @@ void Spike::move_down()
 
 void Spike::update()
 {
-    // FIXME: Not finished
     ++timer;
     if ((timer % 100) < 50)
     {
@@ -41,11 +40,15 @@ void Spike::update()
         move_down();
     }
 
+    frame = SPIKE_FRAME;
+
     this->set_dx(this->get_x() + this->get_dx());
     this->set_dy(this->get_dy() + this->get_dy());
+    sprites.at(frame).setPosition(get_x(), get_y());
 }
 
 void Spike::draw(sf::RenderWindow &window)
 {
-    // FIXME: Not finished
+    sf::Sprite *curr_sprite = &sprites.at(frame);
+    window.draw(*curr_sprite);
 }

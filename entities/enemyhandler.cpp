@@ -17,10 +17,10 @@ void EnemyHandler::update_stomped_enemies(Player *player)
     {
         if ((*it)->get_stomped_on())
         {
-            std::shared_ptr<Enemy> spike = std::dynamic_pointer_cast<Enemy>(*it);
+            std::shared_ptr<Enemy> not_spike = std::dynamic_pointer_cast<Enemy>(*it);
 
             // If the enemy isn't a spike set the enemy to be stomped on.
-            if (!spike)
+            if (not_spike)
             {
                 (*it)->set_x(player->get_x() + x_off);
                 (*it)->set_y(player->get_y() - y_off);
@@ -53,7 +53,9 @@ vector<std::shared_ptr<Enemy>> EnemyHandler::allocate_enemies(const int NUM_ENEM
         int x_pos = rand_x_pos(engine);
         int y_pos = rand_y_pos(engine);
 
-        enemies.push_back(std::make_shared<Enemy>(x_pos, y_pos));
+        std::shared_ptr<Enemy> new_enemy = std::make_shared<Enemy>(x_pos, y_pos);
+
+        enemies.push_back(new_enemy);
     }
     return enemies;
 }
