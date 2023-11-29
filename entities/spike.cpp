@@ -13,7 +13,7 @@ Spike::Spike(int x, int y)
     // FIXME: Make a sprite sheet for the spike.
     init_sprites(ENEMY_WIDTH, ENEMY_HEIGHT,
                         SPIKE_DEFAULT_COLS,
-                        "changeme.png");
+                        "entities\\entity_sprites\\spike.png");
     set_on_ground(false);    
 }
 
