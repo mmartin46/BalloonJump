@@ -4,6 +4,8 @@
 #include "enemy.h"
 
 constexpr int SPIKE_SPEED = 10;
+constexpr int SPIKE_DEFAULT_ROWS = 1;
+constexpr int SPIKE_DEFAULT_COLS = 1;
 
 // FIXME: Not finished
 class Spike : public Enemy

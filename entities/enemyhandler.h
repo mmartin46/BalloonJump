@@ -5,6 +5,7 @@
 #include <random>
 #include <memory>
 #include "enemy.h"
+#include "spike.h"
 
 using std::vector;
 

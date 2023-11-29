@@ -10,16 +10,23 @@ void EnemyHandler::update_stomped_enemies(Player *player)
     int x_off = rand_x_offset(engine);
     int y_off = rand_y_offset(engine);
 
+    
 
     auto it = get_enemies()->begin();
     for (; it != get_enemies()->end(); ++it)
     {
         if ((*it)->get_stomped_on())
         {
-            (*it)->set_x(player->get_x() + x_off);
-            (*it)->set_y(player->get_y() - y_off);
-            (*it)->set_stomped_on(false);
-            break;
+            std::shared_ptr<Enemy> spike = std::dynamic_pointer_cast<Enemy>(*it);
+
+            // If the enemy isn't a spike set the enemy to be stomped on.
+            if (!spike)
+            {
+                (*it)->set_x(player->get_x() + x_off);
+                (*it)->set_y(player->get_y() - y_off);
+                (*it)->set_stomped_on(false);
+                break;
+            }
         }
     }
 }
