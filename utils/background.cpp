@@ -20,7 +20,7 @@ void Background::set_texture(const char *file_name)
         exit(EXIT_FAILURE);
     } 
     background_image = sf::Sprite(texture);
-    background_image.setPosition(-300, -100);
+    background_image.setPosition(-300, -300);
 }
 
 void Background::draw()
