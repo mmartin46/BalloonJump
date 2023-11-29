@@ -16,6 +16,7 @@ class EnemyHandler
     private:
         std::vector<std::shared_ptr<Enemy>> enemies;
         sf::RenderWindow *window_ptr;
+        bool should_gen_general_enemy(int index);
     public:
         EnemyHandler() {}
         EnemyHandler(sf::RenderWindow *window) : window_ptr(window)

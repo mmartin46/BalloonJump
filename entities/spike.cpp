@@ -1,5 +1,21 @@
 #include "spike.h"
 
+Spike::Spike() : Spike(0, 0)
+{
+    sprites = std::vector<sf::Sprite>();
+}
+
+void Spike::init_sprites(const char *file_name)
+{
+    if (!texture.loadFromFile(file_name))
+    {
+        exit(1);
+    }
+    sf::Sprite sprite;
+    sprite.setTexture(texture);
+    sprites.push_back(sprite);
+}
+
 Spike::Spike(int x, int y)
 {
     set_stomped_on(false);
@@ -10,19 +26,30 @@ Spike::Spike(int x, int y)
     sprites = std::vector<sf::Sprite>();
     frame = 0;
 
-    // FIXME: Make a sprite sheet for the spike.
-    init_sprites(ENEMY_WIDTH, ENEMY_HEIGHT,
-                        SPIKE_DEFAULT_COLS,
-                        "entities\\entity_sprites\\spike.png");
+    init_sprites("entities\\entity_sprites\\spike.png");
     set_on_ground(false);
 
     std::cout << sprites.size() << std::endl;    
 }
 
+void Spike::adjust_position()
+{
+    static std::random_device rand_dev;
+    static std::mt19937 engine(rand_dev());
+    if (abs(get_y()) > 2000)
+    {
+        std::uniform_int_distribution<int> rand_y_dis(200, 400);
+        set_y(rand_y_dis(engine));
+    }
+    if (abs(get_x() > 3000))
+    {
+        std::uniform_int_distribution<int> rand_x_dis(0, 3000);
+    }
+}
 
 void Spike::move_up()
 {
-    this->set_dy(SPIKE_SPEED);
+    this->set_dy(-SPIKE_SPEED);
 }
 
 void Spike::move_down()
@@ -42,10 +69,12 @@ void Spike::update()
         move_down();
     }
 
+
+    adjust_position();
     frame = SPIKE_FRAME;
 
-    this->set_dx(this->get_x() + this->get_dx());
-    this->set_dy(this->get_dy() + this->get_dy());
+    this->set_x(this->get_x() + this->get_dx());
+    this->set_y(this->get_y() + this->get_dy());
     sprites.at(frame).setPosition(get_x(), get_y());
 }
 

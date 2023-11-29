@@ -31,6 +31,11 @@ void EnemyHandler::update_stomped_enemies(Player *player)
     }
 }
 
+bool EnemyHandler::should_gen_general_enemy(int index)
+{
+    return (index % 4 == 0);
+}
+
 std::shared_ptr<Enemy> EnemyHandler::get_enemy(int idx)
 {
     if (idx >= enemies.size() || idx < 0)
@@ -55,10 +60,17 @@ vector<std::shared_ptr<Enemy>> EnemyHandler::allocate_enemies(const int NUM_ENEM
         int x_pos = rand_x_pos(engine);
         int y_pos = rand_y_pos(engine);
 
-        //std::shared_ptr<Enemy> new_enemy = std::make_shared<Enemy>(x_pos, y_pos);
-        std::shared_ptr<Enemy> new_enemy = std::make_shared<Enemy>(Spike(x_pos, y_pos));
+        std::shared_ptr<Enemy> enemy;
+        if (should_gen_general_enemy(i))
+        {
+            enemy = std::make_shared<Enemy>(x_pos, y_pos);
+        }
+        else
+        {
+            enemy = std::make_shared<Spike>(x_pos, y_pos);
+        }
 
-        enemies.push_back(new_enemy);
+        enemies.push_back(enemy);
     }
     return enemies;
 }

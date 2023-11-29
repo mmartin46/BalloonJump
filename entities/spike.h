@@ -2,8 +2,9 @@
 #define SPIKE_H
 #pragma once
 #include "enemy.h"
+#include <random>
 
-constexpr int SPIKE_SPEED = 10;
+constexpr int SPIKE_SPEED = 3;
 constexpr int SPIKE_DEFAULT_ROWS = 1;
 constexpr int SPIKE_DEFAULT_COLS = 1;
 
@@ -22,11 +23,13 @@ class Spike : public Enemy
         bool stomped_on;
         bool on_ground;
         bool facing_right;
+        void adjust_position();
     public:
-        explicit Spike() : Spike(0, 0) {};
+        explicit Spike();
         explicit Spike(int x, int y);
         void move_up();
         void move_down();
+        void init_sprites(const char *file_name);
         void draw(sf::RenderWindow &window) override;
         void update() override;
 };
