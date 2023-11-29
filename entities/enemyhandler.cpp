@@ -43,6 +43,8 @@ std::shared_ptr<Enemy> EnemyHandler::get_enemy(int idx)
 
 vector<std::shared_ptr<Enemy>> EnemyHandler::allocate_enemies(const int NUM_ENEMIES, int min_x, int max_x, int min_y, int max_y)
 {
+    enemies.clear();
+
     static std::random_device rand_dev;
     static std::default_random_engine engine(rand_dev());
     std::uniform_int_distribution<int> rand_x_pos(min_x, max_x + DISTANCE_BETWEEN_ENEMIES);

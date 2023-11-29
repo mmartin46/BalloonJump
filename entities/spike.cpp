@@ -14,7 +14,9 @@ Spike::Spike(int x, int y)
     init_sprites(ENEMY_WIDTH, ENEMY_HEIGHT,
                         SPIKE_DEFAULT_COLS,
                         "entities\\entity_sprites\\spike.png");
-    set_on_ground(false);    
+    set_on_ground(false);
+
+    std::cout << sprites.size() << std::endl;    
 }
 
 
