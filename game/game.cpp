@@ -64,7 +64,7 @@ void Game::update()
 
 
     background->scroll(player.get_dx(),(int) background_dy);
-    header.scroll(player.get_dx() , player.get_dy());
+    header.scroll(player.get_x(), player.get_y());
     // Testing
     if (player_landed_on_enemy(player, {PLAYER_WIDTH, PLAYER_HEIGHT}))
     {

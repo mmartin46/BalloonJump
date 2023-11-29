@@ -10,6 +10,7 @@
 using std::vector;
 
 constexpr int DISTANCE_BETWEEN_ENEMIES = 100;
+constexpr int SPIKE_FREQUENCY = 6;
 
 class EnemyHandler
 {

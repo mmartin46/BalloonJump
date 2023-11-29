@@ -33,7 +33,7 @@ void EnemyHandler::update_stomped_enemies(Player *player)
 
 bool EnemyHandler::should_gen_general_enemy(int index)
 {
-    return (index % 4 == 0);
+    return (index % SPIKE_FREQUENCY == 0);
 }
 
 std::shared_ptr<Enemy> EnemyHandler::get_enemy(int idx)
@@ -63,11 +63,11 @@ vector<std::shared_ptr<Enemy>> EnemyHandler::allocate_enemies(const int NUM_ENEM
         std::shared_ptr<Enemy> enemy;
         if (should_gen_general_enemy(i))
         {
-            enemy = std::make_shared<Enemy>(x_pos, y_pos);
+            enemy = std::make_shared<Spike>(x_pos, y_pos);
         }
         else
         {
-            enemy = std::make_shared<Spike>(x_pos, y_pos);
+            enemy = std::make_shared<Enemy>(x_pos, y_pos);
         }
 
         enemies.push_back(enemy);
