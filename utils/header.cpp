@@ -2,9 +2,6 @@
 
 void GameHeader::scroll(int offset_x, int offset_y)
 {
-    sf::Vector2f curr_hs_position = header_string.getPosition();
-    sf::Vector2f curr_ps_position = player_sprite.getPosition();
-
     player_sprite.setPosition((offset_x) - 300, offset_y - 120);
     header_string.setPosition((offset_x + 40) - 300, offset_y - 120);
 }
