@@ -13,14 +13,28 @@ void Player::apply_gravity(bool gravity_switch)
     }
 }
 
+void Player::play_jump_sound()
+{
+    static sf::SoundBuffer soundBuff;
+    static sf::Sound sound;
+    try
+    {
+        soundBuff.loadFromFile("entities//jump.wav");
+        sound.setBuffer(soundBuff);
+        sound.play();
+    }
+    catch(const std::exception& e)
+    {
+        std::cerr << e.what() << '\n';
+    }
+}
+
 
 void Player::jump()
 {
     if (get_on_ground())
     {
-        AudioHandler::get_instance().play_sound("jump_sound", 90.0F);
-        AudioHandler::get_instance().print_sounds();
-
+        play_jump_sound();
         set_on_ground(false);
         set_dy(JUMP_HEIGHT);
     }
@@ -107,7 +121,6 @@ Player::Player(int x, int y)
     on_ground = false;
     init_sprites(PLAYER_WIDTH, PLAYER_HEIGHT, 
                 PLAYER_DEFAULT_ROWS, PLAYER_DEFAULT_COLS);
-    AudioHandler::get_instance().load_sound("jump_sound", "entities//jump.wav");
 }
 Player::Player()
 {
@@ -120,7 +133,6 @@ Player::Player()
 
     on_ground = false;
     init_sprites(PLAYER_WIDTH, PLAYER_HEIGHT, 4, 4);
-    AudioHandler::get_instance().load_sound("jump_sound", "entities//jump.wav");
 }
 
 void Player::init_sprites(int player_width, int player_height, 

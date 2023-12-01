@@ -72,6 +72,8 @@ class Player : public virtual Entity
         bool get_is_jumping() { return is_jumping; }
         void set_is_jumping(bool is_jumping) { this->is_jumping = is_jumping; }
 
+        void play_jump_sound();
+
         void set_on_ground(bool state) { on_ground = state; }
         bool get_on_ground() { return on_ground; }
         void jump();

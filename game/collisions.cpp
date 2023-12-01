@@ -1,11 +1,12 @@
 #include "game.h"
 
-bool Game::player_landed_on_enemy(Player &plyr, std::pair<int, int> dim)
+bool Game::player_landed_on_enemy(Player &plyr, const std::pair<int, int> &dim)
 {
     int touched = 0;
     Matrix<Tile> &tiles = *game_map->get_tile_map();
     float pw = dim.first, ph = dim.second;
     float px = plyr.get_x(), py = plyr.get_y();
+    bool player_landed_on_enemy = false;
 
     for (auto &enemy : *enemy_handler.get_enemies())
     {
@@ -18,11 +19,11 @@ bool Game::player_landed_on_enemy(Player &plyr, std::pair<int, int> dim)
         {
             player.attributes.inc_enem_count();
             enemy->set_stomped_on(true);
-            return true;
+            player_landed_on_enemy = true;
         }
 
     }
-    return false;
+    return player_landed_on_enemy;
 
 }
 
@@ -142,7 +143,6 @@ void Game::collision_handler()
                 }
                 player.set_on_ground(true);
             }
-
 
             entity_collision(player, x, y, {PLAYER_WIDTH, PLAYER_HEIGHT});
         }
