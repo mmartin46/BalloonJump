@@ -76,6 +76,8 @@ class Player : public virtual Entity
 
         void set_on_ground(bool state) { on_ground = state; }
         bool get_on_ground() { return on_ground; }
+
+        void allow_mini_jump();
         void jump();
         void apply_gravity(bool gravity_switch);
         virtual void update();

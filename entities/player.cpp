@@ -109,6 +109,11 @@ void Player::draw(sf::RenderWindow &window)
     window.draw(*curr_sprite);
 }
 
+void Player::allow_mini_jump()
+{
+    set_dy(JUMP_HEIGHT / 2);
+}
+
 Player::Player(int x, int y)
 {
     set_x(x);

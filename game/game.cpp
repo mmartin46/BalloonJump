@@ -68,9 +68,10 @@ void Game::update()
     // Testing
     if (player_landed_on_enemy(player, {PLAYER_WIDTH, PLAYER_HEIGHT}))
     {
-        player.set_dy(JUMP_HEIGHT / 2);
+        player.allow_mini_jump();
     }
 
 
     game_view.setCenter(get_player().get_x() + PLAYER_WIDTH / 2, get_player().get_y() + PLAYER_HEIGHT / 2);
 }
+
