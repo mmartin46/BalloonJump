@@ -17,8 +17,8 @@ void Game::enemy_collision_handler()
 
 Game::Game(sf::RenderWindow *window, Map *map) : window(window), game_map(map), player(PLAYER_INIT_X, PLAYER_INIT_Y), header(window)
 {
-
-    background = std::make_shared<Background>("textures/1330857.jpg", *window);
+    using namespace configurations;
+    background = std::make_shared<Background>(background_file_paths::BACKGROUND_PATH, *window);
     enemy_handler = EnemyHandler(window);
 
     header.set_string("Health x" + (to_string(player.attributes[attribs::CURR_HEALTH])) + "\tCoins x" + (to_string(player.attributes[attribs::COIN_COUNT]) + "\tEnemies x" + (to_string(player.attributes[attribs::ENEMY_COUNT]))));
