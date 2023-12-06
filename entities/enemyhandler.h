@@ -19,7 +19,7 @@ class EnemyHandler
         sf::RenderWindow *window_ptr;
         bool should_gen_general_enemy(int index);
     public:
-        EnemyHandler() {}
+        EnemyHandler() : update_functions{&update_enemies, &update_stomped_enemies} {}
         EnemyHandler(sf::RenderWindow *window) : window_ptr(window)
         {}
         // Allocates the needed number of enemies for the game
@@ -30,6 +30,8 @@ class EnemyHandler
         void update_enemies(Player *player) noexcept;
         // Draws all the enemies
         void draw_enemies() noexcept;
+
+        vector<void (EnemyHandler::*)(Player*)> update_functions;
 
         // Returns a pointer to an enemy.
         std::shared_ptr<Enemy> get_enemy(int idx);

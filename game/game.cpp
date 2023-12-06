@@ -46,7 +46,10 @@ void Game::draw()
 void Game::update()
 {
     player.update();
+
     enemy_handler.update_enemies(&player);
+    enemy_handler.update_stomped_enemies(&player);
+
     collision_handler();
     enemy_collision_handler();
 

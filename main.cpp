@@ -1,6 +1,7 @@
 #include <SFML/Graphics.hpp>
 #include "game/game.h"
 
+// Holds all the game maps
 namespace GameMaps
 {
     static vector<Map> maps;

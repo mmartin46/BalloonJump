@@ -31,6 +31,7 @@ void EnemyHandler::update_stomped_enemies(Player *player)
     }
 }
 
+// Determines if a regular enemy should be generated.
 bool EnemyHandler::should_gen_general_enemy(int index)
 {
     return (index % SPIKE_FREQUENCY == 0);
@@ -91,5 +92,4 @@ void EnemyHandler::update_enemies(Player *player) noexcept
     {
         (*enemy)->update();
     }
-    update_stomped_enemies(player);
 }

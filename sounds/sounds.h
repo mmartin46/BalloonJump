@@ -12,12 +12,16 @@ using std::make_unique;
 using std::unique_ptr;
 using std::string;
 
+/*
+Contains music settings
+*/
 namespace music_settings
 {
     constexpr int VOLUME_MAX = 100;
     constexpr int VOLUME_MIN = 0;
     constexpr float DEFAULT_VOLUME = 30;
 
+    // File paths for all sounds.
     namespace sound_file_paths
     {
         constexpr const char* PLAYER_JUMP_SOUND = "entities//jump.wav";
@@ -26,6 +30,7 @@ namespace music_settings
     }
 }
 
+// Used to load sounds and later on music.
 class AudioHandler
 {
     private:
@@ -38,6 +43,7 @@ class AudioHandler
             return instance;
         }
         static void play_sound(const char*, float volume=music_settings::DEFAULT_VOLUME);
+        // FIXME: Add a music function
 };
 
 

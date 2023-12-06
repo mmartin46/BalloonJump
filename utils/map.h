@@ -13,14 +13,13 @@ using Matrix = vector<vector<T>>;
 constexpr int TILE_SIZE = 20;
 constexpr int NUM_TILES = 24;
 
+// Holds all the coordinates for each map.
 namespace world
 {
-
-    // John 3:5
-    extern std::vector<std::vector<int>> coordinate_map;
+    extern Matrix<int> coordinate_map;
 }
 
-
+// Loads a map from a matrix of integers
 class Map
 {
     private:
@@ -39,7 +38,7 @@ class Map
         vector<sf::Sprite> tile_sprites;
 
         sf::RenderWindow *window;
-        void init_map(int tile_size, vector<vector<int>> *tile_map);
+        void init_map(int tile_size, Matrix<int> *tile_map);
         void init_sprites(int tile_size);
     public:
         void set_number_of_tiles(int number_of_tiles) { this->number_of_tiles = number_of_tiles; }
