@@ -1,6 +1,7 @@
 #ifndef ENEMY_H
 #define ENEMY_H
 #include "player.h"
+#include <random>
 
 constexpr int ENEMY_WIDTH = 16;
 constexpr int ENEMY_HEIGHT = 16;
@@ -29,6 +30,8 @@ class Enemy : public Player
         explicit Enemy(int x, int y);
         virtual void update() override;
         virtual void draw(sf::RenderWindow &window) override;
+
+        int should_change_direction();
 
         virtual void init_sprites(int player_width, int player_height, int num_sprites, const char *file_name);
 

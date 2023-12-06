@@ -29,10 +29,19 @@ void Enemy::move_right()
     this->set_dx(ENEMY_SPEED);
 }
 
+int Enemy::should_change_direction()
+{
+    static std::random_device rand_dev;
+    static std::mt19937 engine(rand_dev());
+    std::uniform_int_distribution<int> switch_thresh(25, 80);
+    int result = switch_thresh(engine);
+    return ((timer % 100) < result);
+}
+
 void Enemy::update()
 {
     ++timer;
-    if ((timer % 100) < 50)
+    if (should_change_direction())
     {
         move_right();
     }
