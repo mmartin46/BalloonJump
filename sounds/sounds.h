@@ -35,6 +35,7 @@ class AudioHandler
 {
     private:
         AudioHandler() = default;
+        sf::Music background_music;
     public:
         // Returns one instance of the AudioHandler
         static AudioHandler& get_instance()
@@ -42,8 +43,12 @@ class AudioHandler
             static AudioHandler instance;
             return instance;
         }
+
+        static void volume_check(float volume);
         static void play_sound(const char*, float volume=music_settings::DEFAULT_VOLUME);
         // FIXME: Add a music function
+        static void play_music(const char*, float volume=music_settings::DEFAULT_VOLUME);
+        static void stop_music();
 };
 
 
