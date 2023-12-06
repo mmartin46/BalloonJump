@@ -8,7 +8,8 @@ void GameHeader::scroll(int offset_x, int offset_y)
 
 void GameHeader::set_sprite()
 {
-    if (!texture.loadFromFile("textures/big_block.png"))
+    using namespace configurations::background_file_paths;
+    if (!texture.loadFromFile(PLAYER_LIFE_PATH))
     {
         std::cerr << "GameHeader::set_sprite() -> Invalid File Name " << std::endl;
     }

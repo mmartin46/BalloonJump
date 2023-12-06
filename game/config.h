@@ -10,6 +10,7 @@ namespace configurations
     namespace background_file_paths
     {
         constexpr const char *BACKGROUND_PATH = "textures/1330857.jpg";
+        constexpr const char *PLAYER_LIFE_PATH = "textures/big_block.png";
     }
 }
 
