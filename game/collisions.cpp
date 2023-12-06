@@ -17,6 +17,8 @@ bool Game::player_landed_on_enemy(Player &plyr, const std::pair<int, int> &dim)
 
         if (px + pw > ex && px < ex + ew && py + ph > ey && py < ey)
         {
+            using namespace music_settings;
+            AudioHandler::play_sound(sound_file_paths::ENEMY_STOMP_SOUND);
             player.attributes.inc_enem_count();
             enemy->set_stomped_on(true);
             player_landed_on_enemy = true;

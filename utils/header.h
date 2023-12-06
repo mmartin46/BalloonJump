@@ -2,7 +2,7 @@
 #define HEADER_H
 #pragma once
 #include <iostream>
-#include "config.h"
+#include "../game/config.h"
 #include <SFML/Graphics.hpp>
 
 constexpr int FONT_SIZE = 16;

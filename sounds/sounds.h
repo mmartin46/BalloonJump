@@ -22,6 +22,7 @@ namespace music_settings
     {
         constexpr const char* PLAYER_JUMP_SOUND = "entities//jump.wav";
         constexpr const char* COIN_COLLECT_SOUND = "sounds//coin_collect.wav";
+        constexpr const char* ENEMY_STOMP_SOUND = "sounds//enemy_stomp.wav";
     }
 }
 
