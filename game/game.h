@@ -42,7 +42,7 @@ class Game
         void collision_handler();
         bool check_tile_collision(const sf::Sprite &sprite, const sf::Sprite &tile_sprite);
         void enemy_collision_handler();
-        bool player_landed_on_enemy(Player &plyr, const std::pair<int, int> &dim);        
+        bool player_landed_on_enemy(Player &plyr, const std::pair<int, int> &dim); 
 };
 
 #endif

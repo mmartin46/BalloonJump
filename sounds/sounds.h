@@ -17,16 +17,18 @@ namespace music_settings
     constexpr int VOLUME_MAX = 100;
     constexpr int VOLUME_MIN = 0;
     constexpr float DEFAULT_VOLUME = 30;
+
+    namespace sound_file_paths
+    {
+        constexpr const char* PLAYER_JUMP_SOUND = "entities//jump.wav";
+        constexpr const char* COIN_COLLECT_SOUND = "sounds//coin_collect.wav";
+    }
 }
 
 class AudioHandler
 {
     private:
-        unordered_map<string, unique_ptr<sf::Music>> tracks;
-
-        unordered_map<string, unique_ptr<sf::SoundBuffer>> sound_buffers;
-        unordered_map<string, sf::Sound> sounds;
-        AudioHandler() : tracks{}, sound_buffers{}, sounds{} {}
+        AudioHandler() = default;
     public:
         // Returns one instance of the AudioHandler
         static AudioHandler& get_instance()
@@ -34,24 +36,10 @@ class AudioHandler
             static AudioHandler instance;
             return instance;
         }
-
-        
-
-        void load_track(const string &custom_name, const string &file_path);
-        void play_track(const string &name, float volume);
-        void pause_track(const string &name);
-        void stop_track(const string &name);
-        void stop_music();
-
-
-
-        void load_sound(const string &custom_name, const string &file_path);
-        void play_sound(const string &name, float volume=music_settings::DEFAULT_VOLUME);
-        void pause_sound(const string &name);
-        void stop_sound(const string &name);
-
-        void print_sounds();
+        static void play_sound(const char*, float volume=music_settings::DEFAULT_VOLUME);
 };
+
+
 
 
 #endif

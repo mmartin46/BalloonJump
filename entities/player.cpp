@@ -13,28 +13,12 @@ void Player::apply_gravity(bool gravity_switch)
     }
 }
 
-void Player::play_jump_sound()
-{
-    static sf::SoundBuffer soundBuff;
-    static sf::Sound sound;
-    try
-    {
-        soundBuff.loadFromFile("entities//jump.wav");
-        sound.setBuffer(soundBuff);
-        sound.play();
-    }
-    catch(const std::exception& e)
-    {
-        std::cerr << e.what() << '\n';
-    }
-}
-
-
 void Player::jump()
 {
+    using namespace music_settings;
     if (get_on_ground())
     {
-        play_jump_sound();
+        AudioHandler::play_sound(sound_file_paths::PLAYER_JUMP_SOUND);
         set_on_ground(false);
         set_dy(JUMP_HEIGHT);
     }

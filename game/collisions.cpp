@@ -123,7 +123,6 @@ bool Game::check_tile_collision(const sf::Sprite &sprite, const sf::Sprite &tile
     return sprite_bounds.intersects(tile_bounds);
 }
 
-
 void Game::collision_handler()
 {
     player.set_on_ground(false);
@@ -138,6 +137,8 @@ void Game::collision_handler()
                 // Check for a coin
                 if (current_tile->get_value() == 5)
                 {
+                    using namespace music_settings;
+                    AudioHandler::play_sound(sound_file_paths::COIN_COLLECT_SOUND);
                     player.attributes.inc_coin_count();
                     game_map->get_tile_map()->at(x).at(y).set_value(0);
                 }
