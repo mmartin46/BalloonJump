@@ -14,9 +14,12 @@
 #define PLAYER_INIT_X 100
 #define PLAYER_INIT_Y 100
 
+
 constexpr int MAX_ENEMY_X = 5000;
 constexpr int MAX_ENEMY_Y = -2000;
 constexpr int ENEMY_COUNT = 30;
+constexpr int MIN_ENEMY_X = 1000;
+constexpr int MIN_ENEMY_Y = -3000;
 
 using std::to_string;
 
@@ -33,6 +36,7 @@ class Game
         GameHeader header;
         EnemyHandler enemy_handler;
         Player player;
+        bool game_over;
     public:
         Game(sf::RenderWindow *window, Map *game_map);
         Player get_player() { return player; }
@@ -44,6 +48,9 @@ class Game
         bool check_tile_collision(const sf::Sprite &sprite, const sf::Sprite &tile_sprite);
         void enemy_collision_handler();
         bool player_landed_on_enemy(Player &plyr, const std::pair<int, int> &dim); 
+        void set_game_over(bool state) { game_over = state; }
+        bool is_game_over() { return game_over; }
+        void handle_game_over();
 };
 
 #endif

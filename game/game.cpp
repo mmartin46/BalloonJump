@@ -26,8 +26,9 @@ Game::Game(sf::RenderWindow *window, Map *map) : window(window), game_map(map), 
 
     header.set_string("Health x" + (to_string(player.attributes[attribs::CURR_HEALTH])) + "\tCoins x" + (to_string(player.attributes[attribs::COIN_COUNT]) + "\tEnemies x" + (to_string(player.attributes[attribs::ENEMY_COUNT]))));
 
-    enemy_handler.allocate_enemies(ENEMY_COUNT, 1000, MAX_ENEMY_X, -3000, MAX_ENEMY_Y);
+    enemy_handler.allocate_enemies(ENEMY_COUNT, MIN_ENEMY_X, MAX_ENEMY_X, MIN_ENEMY_Y, MAX_ENEMY_Y);
     game_view.setSize(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2);
+    set_game_over(false);
 }
 
 
@@ -77,7 +78,22 @@ void Game::update()
         player.allow_mini_jump();
     }
 
-
+    handle_game_over();
     game_view.setCenter(get_player().get_x() + PLAYER_WIDTH / 2, get_player().get_y() + PLAYER_HEIGHT / 2);
 }
 
+
+void Game::handle_game_over()
+{
+    // If the player's health is 0 or less set the game over variable to true.
+    if (player.attributes.get_health() <= 0)
+    {
+        set_game_over(true);
+    }
+
+    if (is_game_over())
+    {
+        // FIXME: Make a proper handling of a game over.
+        exit(1);
+    }
+}

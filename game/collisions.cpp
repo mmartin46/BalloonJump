@@ -15,6 +15,9 @@ bool Game::player_landed_on_enemy(Player &plyr, const std::pair<int, int> &dim)
         float ew = ENEMY_WIDTH;
         float eh = ENEMY_HEIGHT;
 
+        bool collide_x = px + pw > ex && px < ex + ew;
+        bool collide_y = py + ph > ey && py < ey + eh;
+
         if (px + pw > ex && px < ex + ew && py + ph > ey && py < ey)
         {
             using namespace music_settings;
@@ -22,6 +25,16 @@ bool Game::player_landed_on_enemy(Player &plyr, const std::pair<int, int> &dim)
             player.attributes.inc_enem_count();
             enemy->set_stomped_on(true);
             player_landed_on_enemy = true;
+            continue;
+        }
+
+        // If the player didn't land on them but touching 
+        // decrease the health.
+        sf::FloatRect enemy_bound_box(ex, ey, ew, eh);
+        sf::FloatRect player_bound_box(px, py, pw, ph);
+        if (player_bound_box.intersects(enemy_bound_box))
+        {
+            player.attributes.dec_health();
         }
 
     }
