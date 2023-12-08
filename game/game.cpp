@@ -21,6 +21,8 @@ Game::Game(sf::RenderWindow *window, Map *map) : window(window), game_map(map), 
     background = std::make_shared<Background>(background_file_paths::BACKGROUND_PATH, *window);
     enemy_handler = EnemyHandler(window);
 
+    AudioHandler::get_instance().play_music("sounds//woooooo.mp3");
+
     header.set_string("Health x" + (to_string(player.attributes[attribs::CURR_HEALTH])) + "\tCoins x" + (to_string(player.attributes[attribs::COIN_COUNT]) + "\tEnemies x" + (to_string(player.attributes[attribs::ENEMY_COUNT]))));
 
     enemy_handler.allocate_enemies(ENEMY_COUNT, 1000, MAX_ENEMY_X, -3000, MAX_ENEMY_Y);

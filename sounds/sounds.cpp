@@ -36,6 +36,7 @@ void AudioHandler::play_music(const char *file, float volume)
     {
         singleton->background_music.openFromFile(file);
         singleton->background_music.setVolume(volume);
+        singleton->background_music.setLoop(true);
         singleton->background_music.play();
     }
     catch(const std::exception& e)
