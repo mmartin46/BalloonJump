@@ -20,6 +20,7 @@ constexpr int ENEMY_COUNT = 30;
 
 using std::to_string;
 
+
 class Game
 {
     private:

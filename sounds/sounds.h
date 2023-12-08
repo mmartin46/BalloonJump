@@ -20,6 +20,7 @@ namespace music_settings
     constexpr int VOLUME_MAX = 100;
     constexpr int VOLUME_MIN = 0;
     constexpr float DEFAULT_VOLUME = 30;
+    constexpr float BACKGROUND_MUSIC_VOLUME = 15;
 
     // File paths for all sounds.
     namespace sound_file_paths
@@ -27,6 +28,12 @@ namespace music_settings
         constexpr const char* PLAYER_JUMP_SOUND = "entities//jump.wav";
         constexpr const char* COIN_COLLECT_SOUND = "sounds//coin_collect.wav";
         constexpr const char* ENEMY_STOMP_SOUND = "sounds//enemy_stomp.wav";
+    }
+
+    // File paths for all music.
+    namespace music_file_paths
+    {
+        constexpr const char* LEVEL_ONE_MUSIC = "sounds//woooooo.mp3";
     }
 }
 

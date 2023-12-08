@@ -18,10 +18,11 @@ void Game::enemy_collision_handler()
 Game::Game(sf::RenderWindow *window, Map *map) : window(window), game_map(map), player(PLAYER_INIT_X, PLAYER_INIT_Y), header(window)
 {
     using namespace configurations;
+    using namespace music_settings;
     background = std::make_shared<Background>(background_file_paths::BACKGROUND_PATH, *window);
     enemy_handler = EnemyHandler(window);
 
-    AudioHandler::get_instance().play_music("sounds//woooooo.mp3");
+    AudioHandler::get_instance().play_music(music_file_paths::LEVEL_ONE_MUSIC, music_settings::BACKGROUND_MUSIC_VOLUME);
 
     header.set_string("Health x" + (to_string(player.attributes[attribs::CURR_HEALTH])) + "\tCoins x" + (to_string(player.attributes[attribs::COIN_COUNT]) + "\tEnemies x" + (to_string(player.attributes[attribs::ENEMY_COUNT]))));
 
