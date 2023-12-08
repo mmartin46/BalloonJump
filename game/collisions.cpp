@@ -52,14 +52,20 @@ int Game::entity_collision(Player &plyr, int i, int j, std::pair<int, int> dim)
     float bx = tiles.at(i).at(j).get_x(), by = tiles.at(i).at(j).get_y();
     float bw = TILE_SIZE, bh = TILE_SIZE;
 
-    if ((tiles.at(i).at(j).get_value() == 0) || (tiles.at(i).at(j).get_value() == 5))
+    const int TOP_EDGE = 1;
+    const int BOTTOM_EDGE = 2;
+    const int RIGHT_EDGE = 3;
+    const int LEFT_EDGE = 4;
+    const int COIN_VALUE = 5;
+
+    if ((tiles.at(i).at(j).get_value() == 0) || (tiles.at(i).at(j).get_value() == COIN_VALUE))
     {
         return 0;
     }
 
     // Allow the enemy to move through coins
     Enemy *enemy = dynamic_cast<Enemy*>(&plyr);
-    if (enemy && (tiles.at(i).at(j).get_value() == 5))
+    if (enemy && (tiles.at(i).at(j).get_value() == COIN_VALUE))
     {
         return 0;
     }
@@ -77,7 +83,7 @@ int Game::entity_collision(Player &plyr, int i, int j, std::pair<int, int> dim)
             plyr.set_dy(0);
             plyr.set_on_ground(false);
             plyr.set_is_jumping(true);
-            touched = 1;
+            touched = TOP_EDGE;
         }
     }
     if (px+pw > bx && px<bx+bw)
@@ -93,7 +99,7 @@ int Game::entity_collision(Player &plyr, int i, int j, std::pair<int, int> dim)
             plyr.set_dy(0);
             plyr.set_on_ground(true);
             //plyr.set_is_jumping(false);
-            touched = 2;
+            touched = BOTTOM_EDGE;
         }
     }
 
@@ -107,7 +113,7 @@ int Game::entity_collision(Player &plyr, int i, int j, std::pair<int, int> dim)
             px = bx+bw;
 
             plyr.set_dx(0);
-            touched = 3;
+            touched = RIGHT_EDGE;
         }
         // Rubbing against left edge
         else if (px+pw > bx && px < bx && plyr.get_dx() > 0)
@@ -117,11 +123,11 @@ int Game::entity_collision(Player &plyr, int i, int j, std::pair<int, int> dim)
             px = bx-pw;
 
             plyr.set_dx(0);
-            touched = 4;
+            touched = LEFT_EDGE;
         }
     }
 
-    if (touched == 3 || touched == 4)
+    if (touched == RIGHT_EDGE || touched == LEFT_EDGE)
     {
         plyr.set_on_ground(false);
     }
