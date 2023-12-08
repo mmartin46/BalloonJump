@@ -21,6 +21,8 @@ Game::Game(sf::RenderWindow *window, Map *map) : window(window), game_map(map), 
     using namespace music_settings;
     background = std::make_shared<Background>(background_file_paths::BACKGROUND_PATH, *window);
     enemy_handler = EnemyHandler(window);
+    set_game_over(false);
+
 
     AudioHandler::get_instance().play_music(music_file_paths::LEVEL_ONE_MUSIC, music_settings::BACKGROUND_MUSIC_VOLUME);
 
@@ -28,7 +30,6 @@ Game::Game(sf::RenderWindow *window, Map *map) : window(window), game_map(map), 
 
     enemy_handler.allocate_enemies(ENEMY_COUNT, MIN_ENEMY_X, MAX_ENEMY_X, MIN_ENEMY_Y, MAX_ENEMY_Y);
     game_view.setSize(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2);
-    set_game_over(false);
 }
 
 
@@ -47,15 +48,24 @@ void Game::draw()
     //window->setView(window->getDefaultView());
 }
 
+void Game::player_enemy_collision_handling()
+{
+    enemy_handler.update_enemies(&player);
+    enemy_handler.update_stomped_enemies(&player);
+    collision_handler();
+    enemy_collision_handler();
+
+    if (player_landed_on_enemy(player, {PLAYER_WIDTH, PLAYER_HEIGHT}))
+    {
+        player.allow_mini_jump();
+    }
+}
+
 void Game::update()
 {
     player.update();
+    player_enemy_collision_handling();
 
-    enemy_handler.update_enemies(&player);
-    enemy_handler.update_stomped_enemies(&player);
-
-    collision_handler();
-    enemy_collision_handler();
 
     static float background_dy;
 
@@ -72,12 +82,6 @@ void Game::update()
 
     background->scroll(player.get_dx(),(int) background_dy);
     header.scroll(player.get_x(), player.get_y());
-    // Testing
-    if (player_landed_on_enemy(player, {PLAYER_WIDTH, PLAYER_HEIGHT}))
-    {
-        player.allow_mini_jump();
-    }
-
     handle_game_over();
     game_view.setCenter(get_player().get_x() + PLAYER_WIDTH / 2, get_player().get_y() + PLAYER_HEIGHT / 2);
 }

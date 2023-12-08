@@ -51,6 +51,8 @@ class Game
         void set_game_over(bool state) { game_over = state; }
         bool is_game_over() { return game_over; }
         void handle_game_over();
+
+        void player_enemy_collision_handling();
 };
 
 #endif
