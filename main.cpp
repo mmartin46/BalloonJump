@@ -1,30 +1,56 @@
 #include <SFML/Graphics.hpp>
 #include "game/game.h"
+#include "utils/maphandler.h"
 
-// Holds all the game maps
-namespace GameMaps
+using std::string;
+
+const string WORLD_1 = "world_1";
+
+class MapHandler
 {
-    static vector<Map> maps;
+    private:
+        MapHandler(sf::RenderWindow &);
+    public:
+        static MapHandler& get_instance(sf::RenderWindow &window);
+        std::unordered_map<std::string, vector<Map>> world_maps;
+};
+
+MapHandler::MapHandler(sf::RenderWindow &window)
+{
+    world_maps.insert({WORLD_1, vector<Map>()});
 }
+
+MapHandler& MapHandler::get_instance(sf::RenderWindow &window)
+{
+    static MapHandler map_handler(window);
+    return map_handler;
+}
+
+#define ALL_WORLDS map_handler.world_maps
 
 
 int main()
 { 
-    sf::RenderWindow window(sf::VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT), "Test Game");
 
     sf::Texture tileset;
-    if (!tileset.loadFromFile("textures/tile_sheet.png"))
+    if (!tileset.loadFromFile("textures/map1_tile_sheet.png"))
     {
         return -1;
     }
 
+    sf::RenderWindow window(sf::VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT), "Test Game");
+    MapHandler &map_handler = MapHandler::get_instance(window);
+
     Map map(&window, world::coordinate_map.size(), world::coordinate_map.at(0).size(),
             tileset, TILE_SIZE,
-            &world::coordinate_map, "textures/tile_sheet.png",
+            &world::coordinate_map, "textures/map1_tile_sheet.png",
             NUM_TILES + 1);
+    ALL_WORLDS[WORLD_1].push_back(map);
 
-    GameMaps::maps.push_back(map);
-    Game game(&window, &GameMaps::maps.at(0));
+
+
+
+    Game game(&window, &ALL_WORLDS[WORLD_1].at(0));
 
     while (window.isOpen())
     {

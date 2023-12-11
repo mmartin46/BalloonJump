@@ -28,8 +28,6 @@ Spike::Spike(int x, int y)
 
     init_sprites("entities\\entity_sprites\\spike.png");
     set_on_ground(false);
-
-    std::cout << sprites.size() << std::endl;    
 }
 
 void Spike::adjust_position()
