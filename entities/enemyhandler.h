@@ -18,6 +18,7 @@ class EnemyHandler
         std::vector<std::shared_ptr<Enemy>> enemies;
         sf::RenderWindow *window_ptr;
         bool should_gen_general_enemy(int index);
+        double distance_from_player(Player *player, std::shared_ptr<Enemy>enemy);
     public:
         EnemyHandler() : update_functions{&update_enemies, &update_stomped_enemies} {}
         EnemyHandler(sf::RenderWindow *window) : window_ptr(window)

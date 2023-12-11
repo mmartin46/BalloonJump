@@ -1,5 +1,16 @@
 #include "enemyhandler.h"
 
+double EnemyHandler::distance_from_player(Player *player, std::shared_ptr<Enemy> enemy)
+{
+    double first_arg = (player->get_x() - enemy->get_x());
+    first_arg = pow(first_arg, 2.0);
+    double second_arg = (player->get_y() - enemy->get_y());
+    second_arg = pow(second_arg, 2.0);
+    
+    return sqrt(first_arg + second_arg);
+}
+
+
 void EnemyHandler::update_stomped_enemies(Player *player)
 {
     static std::random_device rand_dev;
@@ -26,6 +37,11 @@ void EnemyHandler::update_stomped_enemies(Player *player)
                 (*it)->set_y(player->get_y() - y_off);
                 (*it)->set_stomped_on(false);
                 break;
+            }
+            if (distance_from_player(player, *it) >= SCREEN_WIDTH)
+            {
+                (*it)->set_x(player->get_x() + x_off);
+                (*it)->set_y(player->get_y() - y_off);                
             }
         }
     }
