@@ -113,3 +113,7 @@ void Game::change_game_map(Map *new_map)
         // FIXME: Also swap the background music.
     }
 }
+
+// Roomate Suggestion
+// FIXME: Add a Manhattan distance ( off-screen ) function between a player and enemy
+// When they aren't on the screen get rid of them.
