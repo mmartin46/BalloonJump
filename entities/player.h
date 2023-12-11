@@ -52,6 +52,7 @@ class Player : public virtual Entity
         bool on_ground;
         bool facing_right;
         bool is_jumping;
+        int is_stuck;
     public:
         PlayerAttributes attributes;
         explicit Player();
@@ -74,6 +75,10 @@ class Player : public virtual Entity
 
         void set_on_ground(bool state) { on_ground = state; }
         bool get_on_ground() { return on_ground; }
+
+
+        virtual int get_is_stuck() { return 0; } const
+        virtual void set_is_stuck(int is_stuck) { }
 
         void allow_mini_jump();
         void jump();

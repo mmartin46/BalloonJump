@@ -15,6 +15,8 @@ Enemy::Enemy(int x, int y)
                         ENEMY_DEFAULT_COLS,
                         "entities\\entity_sprites\\enemy.png");
     set_on_ground(false);
+    saved_position = std::make_pair(default_coordinates::DEFAULT_SAVED_X, 
+                                    default_coordinates::DEFAULT_SAVED_Y);
 }
 
 void Enemy::move_left()
@@ -31,10 +33,14 @@ void Enemy::move_right()
 
 int Enemy::should_change_direction()
 {
-    // static std::random_device rand_dev;
-    // static std::mt19937 engine(rand_dev());
-    // std::uniform_int_distribution<int> switch_thresh(80, 80);
-    // int result = switch_thresh(engine);
+    // if (get_is_stuck() == STUCK_MOVING_LEFT)
+    // {
+    //     return 1;
+    // }
+    // else if (get_is_stuck() == STUCK_MOVING_RIGHT)
+    // {
+    //     return 0;
+    // }
     return ((timer % 100) < 50);
 }
 
@@ -44,10 +50,12 @@ void Enemy::update()
     if (should_change_direction())
     {
         move_right();
+        set_is_stuck(false);
     }
     else
     {
         move_left();
+        set_is_stuck(false);
     }
 
     apply_gravity(false);

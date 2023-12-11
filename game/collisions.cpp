@@ -114,6 +114,10 @@ int Game::entity_collision(Player &plyr, int i, int j, std::pair<int, int> dim)
 
             plyr.set_dx(0);
             touched = RIGHT_EDGE;
+            if (enemy)
+            {
+                enemy->set_is_stuck(STUCK_MOVING_RIGHT);
+            }
         }
         // Rubbing against left edge
         else if (px+pw > bx && px < bx && plyr.get_dx() > 0)
@@ -124,6 +128,10 @@ int Game::entity_collision(Player &plyr, int i, int j, std::pair<int, int> dim)
 
             plyr.set_dx(0);
             touched = LEFT_EDGE;
+            if (enemy)
+            {
+                enemy->set_is_stuck(STUCK_MOVING_LEFT);
+            }
         }
     }
 
