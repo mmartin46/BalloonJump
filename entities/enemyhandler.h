@@ -36,6 +36,10 @@ class EnemyHandler
         // Returns a pointer to an enemy.
         std::shared_ptr<Enemy> get_enemy(int idx);
         vector<std::shared_ptr<Enemy>>* get_enemies() { return &enemies; };
+
+        // Roomate Suggestion
+        // FIXME: Add a Manhattan distance ( off-screen ) function between a player and enemy
+        // When they aren't on the screen get rid of them.
 };
 
 #endif
