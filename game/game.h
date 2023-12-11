@@ -37,6 +37,7 @@ class Game
         EnemyHandler enemy_handler;
         Player player;
         bool game_over;
+        bool level_complete;
     public:
         Game(sf::RenderWindow *window, Map *game_map);
         Player get_player() { return player; }
@@ -53,6 +54,9 @@ class Game
         void handle_game_over();
 
         void player_enemy_collision_handling();
+
+        void change_game_map(Map *new_map);
 };
+
 
 #endif

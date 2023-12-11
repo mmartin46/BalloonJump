@@ -22,6 +22,7 @@ Game::Game(sf::RenderWindow *window, Map *map) : window(window), game_map(map), 
     background = std::make_shared<Background>(background_file_paths::BACKGROUND_PATH, *window);
     enemy_handler = EnemyHandler(window);
     set_game_over(false);
+    level_complete = false;
 
 
     AudioHandler::get_instance().play_music(music_file_paths::LEVEL_ONE_MUSIC, music_settings::BACKGROUND_MUSIC_VOLUME);
@@ -99,5 +100,16 @@ void Game::handle_game_over()
     {
         // FIXME: Make a proper handling of a game over.
         exit(1);
+    }
+}
+
+// If the player beat the level swap to a different map.
+void Game::change_game_map(Map *new_map)
+{
+    if (level_complete)
+    {
+        game_map = new_map;
+        level_complete = false;
+        // FIXME: Also swap the background music.
     }
 }
