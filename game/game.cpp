@@ -1,5 +1,11 @@
 #include "game.h"
 
+void Game::init_current_level()
+{
+    current_level.first = 0;
+    current_level.second = 0;
+}
+
 void Game::enemy_collision_handler()
 {
     int x, y, z;
@@ -83,7 +89,10 @@ void Game::update()
 
     background->scroll(player.get_dx(),(int) background_dy);
     header.scroll(player.get_x(), player.get_y());
+    
     handle_game_over();
+    change_game_map();
+
     game_view.setCenter(get_player().get_x() + PLAYER_WIDTH / 2, get_player().get_y() + PLAYER_HEIGHT / 2);
 }
 
@@ -104,13 +113,16 @@ void Game::handle_game_over()
 }
 
 // If the player beat the level swap to a different map.
-void Game::change_game_map(Map *new_map)
+void Game::change_game_map()
 {
     if (level_complete)
     {
-        game_map = new_map;
         level_complete = false;
         // FIXME: Also swap the background music.
+        if ((current_level.second + 1) < world::world_maps.at(current_level.first).size())
+        {
+            game_map->init_map(TILE_SIZE, &WORLD_MAP(current_level.first, ++current_level.second));
+        }
     }
 }
 

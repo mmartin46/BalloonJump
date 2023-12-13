@@ -42,6 +42,8 @@ class Game
         bool game_over;
         bool level_complete;
         pair<int, int> current_level;
+
+        void init_current_level();
     public:
         Game(sf::RenderWindow *window, Map *game_map);
         Player get_player() { return player; }
@@ -59,7 +61,7 @@ class Game
 
         void player_enemy_collision_handling();
 
-        void change_game_map(Map *new_map);
+        void change_game_map();
 };
 
 
