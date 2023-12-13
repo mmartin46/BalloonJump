@@ -16,9 +16,9 @@ int main()
     sf::RenderWindow window(sf::VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT), "Test Game");
     MapHandler &map_handler = MapHandler::get_instance(window);
 
-    Map map(&window, world::world_1_1_map.size(), world::world_1_1_map.at(0).size(),
+    Map map(&window, world::world_maps.at(0).at(0).size(), world::world_maps.at(0).at(0).at(0).size(),
             tileset, TILE_SIZE,
-            &world::world_1_1_map, "textures/map1_tile_sheet.png",
+            &world::world_maps.at(0).at(0), "textures/map1_tile_sheet.png",
             NUM_TILES + 1);
     ALL_WORLDS[WORLD_1].push_back(map);
 

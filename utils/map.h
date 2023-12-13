@@ -16,7 +16,7 @@ constexpr int NUM_TILES = 24;
 // Holds all the coordinates for each map.
 namespace world
 {
-    extern Matrix<int> world_1_1_map;
+    extern Matrix<Matrix<int>> world_maps;
 }
 
 // Loads a map from a matrix of integers
@@ -62,6 +62,7 @@ class Map
                             vector<vector<int>> *tile_map, const char *file_name, int number_of_tiles);
 
         Matrix<Tile>* get_tile_map() { return &tile_map; }
+        void set_tile_map(Matrix<Tile> *world_map) { this->tile_map = *world_map; }
         void draw();
 };
 
