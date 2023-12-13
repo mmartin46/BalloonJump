@@ -20,6 +20,7 @@ constexpr int MAX_ENEMY_Y = -2000;
 constexpr int ENEMY_COUNT = 30;
 constexpr int MIN_ENEMY_X = 1000;
 constexpr int MIN_ENEMY_Y = -3000;
+constexpr int PLAYER_COIN_LIMIT = 10;
 
 using std::to_string;
 using std::pair;
@@ -60,7 +61,6 @@ class Game
         void handle_game_over();
 
         void player_enemy_collision_handling();
-
         void change_game_map();
 };
 

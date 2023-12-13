@@ -57,8 +57,18 @@ class Map
         
         sf::Texture get_tile_set() { return tileset; }
 
+        void set_tile_file_name(const char* file_name) 
+        { 
+            this->file_name = file_name;
+            if (!tileset.loadFromFile(file_name)) 
+            {
+                throw std::runtime_error("Invalid file");
+            }
+        }
+
+
         Map();
-        Map(sf::RenderWindow *window, int rows, int cols, sf::Texture tileset, int tile_size,
+        Map(sf::RenderWindow *window, int rows, int cols, int tile_size,
                             vector<vector<int>> *tile_map, const char *file_name, int number_of_tiles);
 
         Matrix<Tile>* get_tile_map() { return &tile_map; }

@@ -115,14 +115,29 @@ void Game::handle_game_over()
 // If the player beat the level swap to a different map.
 void Game::change_game_map()
 {
+    if (player.attributes.get_coin_count() == PLAYER_COIN_LIMIT)
+    {
+        player.attributes.inc_coin_count();
+        level_complete = true;
+        std::cout << "Game::change_game_map(): Player has enough coins" << std::endl;
+    }
     if (level_complete)
     {
-        level_complete = false;
         // FIXME: Also swap the background music.
-        if ((current_level.second + 1) < world::world_maps.at(current_level.first).size())
+        try
         {
-            game_map->init_map(TILE_SIZE, &WORLD_MAP(current_level.first, ++current_level.second));
+            if ((current_level.second + 1) < world::world_maps.at(current_level.first).size())
+            {
+                std::cout << "Game::change_game_map(): Changing map";
+                game_map->init_map(TILE_SIZE, &WORLD_MAP(current_level.first, ++current_level.second));
+                // game_map->set_tile_file_name();
+            }
         }
+        catch(const std::exception& e)
+        {
+            std::cerr << e.what() << '\n';
+        }
+        level_complete = false;
     }
 }
 
