@@ -22,6 +22,7 @@ constexpr int MIN_ENEMY_X = 1000;
 constexpr int MIN_ENEMY_Y = -3000;
 
 using std::to_string;
+using std::pair;
 
 
 class Game
@@ -38,6 +39,7 @@ class Game
         Player player;
         bool game_over;
         bool level_complete;
+        pair<int, int> current_level;
     public:
         Game(sf::RenderWindow *window, Map *game_map);
         Player get_player() { return player; }
