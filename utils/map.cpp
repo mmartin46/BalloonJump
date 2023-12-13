@@ -121,6 +121,7 @@ Map::Map(sf::RenderWindow *window, int rows, int cols, int tile_size,
 // Collect sprites from the sprite sheet
 void Map::init_sprites(int tile_size)
 {
+    tile_sprites.clear();
     for (int x = 0; x < get_number_of_tiles(); ++x)
     {
         try

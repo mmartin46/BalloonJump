@@ -38,8 +38,8 @@ class Map
         vector<sf::Sprite> tile_sprites;
 
         sf::RenderWindow *window;
-        void init_sprites(int tile_size);
     public:
+        void init_sprites(int tile_size);
         void init_map(int tile_size, Matrix<int> *tile_map);
         void set_number_of_tiles(int number_of_tiles) { this->number_of_tiles = number_of_tiles; }
         int get_number_of_tiles() { return number_of_tiles; }
