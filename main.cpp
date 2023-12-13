@@ -2,7 +2,6 @@
 #include "game/game.h"
 #include "utils/maphandler.h"
 
-#define WORLD_MAP(stage, level)  world::world_maps.at(stage).at(level)
 
 int main()
 { 

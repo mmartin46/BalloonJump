@@ -24,6 +24,8 @@ constexpr int MIN_ENEMY_Y = -3000;
 using std::to_string;
 using std::pair;
 
+#define WORLD_MAP(stage, level)  world::world_maps.at(stage).at(level)
+
 
 class Game
 {
