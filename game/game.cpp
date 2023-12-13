@@ -130,7 +130,7 @@ void Game::change_game_map()
             {
                 std::cout << "Game::change_game_map(): Changing map";
                 game_map->init_map(TILE_SIZE, &WORLD_MAP(current_level.first, ++current_level.second));
-                // game_map->set_tile_file_name();
+                game_map->set_tile_file_name("textures/map2_tile_sheet.png");
             }
         }
         catch(const std::exception& e)
