@@ -2,7 +2,7 @@
 #include "game/game.h"
 #include "utils/maphandler.h"
 
-
+#define WORLD_MAP(stage, level)  world::world_maps.at(stage).at(level)
 
 int main()
 { 
@@ -16,9 +16,9 @@ int main()
     sf::RenderWindow window(sf::VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT), "Test Game");
     MapHandler &map_handler = MapHandler::get_instance(window);
 
-    Map map(&window, world::world_maps.at(0).at(0).size(), world::world_maps.at(0).at(0).at(0).size(),
+    Map map(&window, WORLD_MAP(0, 0).size(), WORLD_MAP(0, 0).at(0).size(),
             tileset, TILE_SIZE,
-            &world::world_maps.at(0).at(0), "textures/map1_tile_sheet.png",
+            &WORLD_MAP(0, 0), "textures/map1_tile_sheet.png",
             NUM_TILES + 1);
     ALL_WORLDS[WORLD_1].push_back(map);
 
