@@ -16,7 +16,7 @@ constexpr int NUM_TILES = 24;
 // Holds all the coordinates for each map.
 namespace world
 {
-    extern Matrix<int> coordinate_map;
+    extern Matrix<int> world_1_1_map;
 }
 
 // Loads a map from a matrix of integers
