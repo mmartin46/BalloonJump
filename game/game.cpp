@@ -129,9 +129,8 @@ void Game::handle_game_over()
 // If the player beat the level swap to a different map.
 void Game::change_game_map()
 {
-    if (player.attributes.get_coin_count() == PLAYER_COIN_LIMIT)
+    if (player.attributes.get_coin_count() >= PLAYER_COIN_LIMIT)
     {
-        player.attributes.inc_coin_count();
         level_complete = true;
         std::cout << "Game::change_game_map(): Player has enough coins" << std::endl;
     }
