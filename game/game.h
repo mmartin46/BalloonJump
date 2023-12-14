@@ -20,7 +20,7 @@ constexpr int MAX_ENEMY_Y = -2000;
 constexpr int ENEMY_COUNT = 30;
 constexpr int MIN_ENEMY_X = 1000;
 constexpr int MIN_ENEMY_Y = -3000;
-constexpr int PLAYER_COIN_LIMIT = 10;
+constexpr int PLAYER_COIN_LIMIT = 300;
 constexpr int COIN_VALUE = 5;
 
 using std::to_string;

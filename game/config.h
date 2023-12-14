@@ -1,7 +1,7 @@
 #ifndef CONFIG_H
 #define CONFIG_H
 
-constexpr int DELAY_TIME = 10000;
+constexpr int DELAY_TIME = 100;
 
 
 namespace configurations
