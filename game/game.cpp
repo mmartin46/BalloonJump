@@ -147,6 +147,8 @@ void Game::change_game_map()
                 game_map->init_sprites(TILE_SIZE);
                 player_reset_position(player);
                 player_reset_assets(player);
+                AudioHandler::get_instance().stop_music();
+                AudioHandler::get_instance().play_music("sounds/woooooo2.mp3", music_settings::BACKGROUND_MUSIC_VOLUME);
             }
         }
         catch(const std::exception& e)
