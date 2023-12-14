@@ -56,7 +56,6 @@ int Game::entity_collision(Player &plyr, int i, int j, std::pair<int, int> dim)
     const int BOTTOM_EDGE = 2;
     const int RIGHT_EDGE = 3;
     const int LEFT_EDGE = 4;
-    const int COIN_VALUE = 5;
 
     if ((tiles.at(i).at(j).get_value() == 0) || (tiles.at(i).at(j).get_value() == COIN_VALUE))
     {
@@ -164,7 +163,7 @@ void Game::collision_handler()
             if (check_tile_collision(player.get_sprite(), *current_tile->get_sprite()))
             {
                 // Check for a coin
-                if (current_tile->get_value() == 5)
+                if (current_tile->get_value() == COIN_VALUE)
                 {
                     using namespace music_settings;
                     AudioHandler::play_sound(sound_file_paths::COIN_COLLECT_SOUND);
