@@ -17,8 +17,8 @@
 
 
 constexpr int PLAYER_SPEED = 6;
-constexpr int DEFAULT_PLAYER_X = 250;
-constexpr int DEFAULT_PLAYER_Y = 500;
+constexpr int DEFAULT_PLAYER_X = 170;
+constexpr int DEFAULT_PLAYER_Y = 0;
 constexpr int PLAYER_GRAVITY = 2;
 constexpr int JUMP_HEIGHT = -20;
 

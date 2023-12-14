@@ -60,6 +60,9 @@ class Game
         bool is_game_over() { return game_over; }
         void handle_game_over();
 
+        void player_reset_position(Player &player);
+        void player_reset_assets(Player &player);
+
         void player_enemy_collision_handling();
         void change_game_map();
 };

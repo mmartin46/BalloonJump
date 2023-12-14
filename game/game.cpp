@@ -68,6 +68,20 @@ void Game::player_enemy_collision_handling()
     }
 }
 
+void Game::player_reset_position(Player &player)
+{
+    player.set_x(DEFAULT_PLAYER_X);
+    player.set_y(DEFAULT_PLAYER_Y);
+    std::cout << player.get_x() << " " << player.get_y();
+}
+
+void Game::player_reset_assets(Player &player)
+{
+    player.attributes.reset_health();
+    player.attributes.set_coin_count(DEFAULT_COIN_COLLECT_COUNT);
+    player.attributes.set_enem_count(DEFAULT_ENEMY_DESTROY_COUNT);
+}
+
 void Game::update()
 {
     player.update();
@@ -132,6 +146,8 @@ void Game::change_game_map()
                 game_map->init_map(TILE_SIZE, &WORLD_MAP(current_level.first, ++current_level.second));
                 game_map->set_tile_file_name("textures/map2_tile_sheet.png");
                 game_map->init_sprites(TILE_SIZE);
+                player_reset_position(player);
+                player_reset_assets(player);
             }
         }
         catch(const std::exception& e)

@@ -12,6 +12,9 @@ namespace attribs
     constexpr int CURR_HEALTH = 2;
 }
 
+constexpr int DEFAULT_COIN_COLLECT_COUNT = 0;
+constexpr int DEFAULT_ENEMY_DESTROY_COUNT = 0;
+
 class PlayerAttributes
 {
     private:
@@ -28,6 +31,10 @@ class PlayerAttributes
         
         int get_coin_count() const { return coins_collected; }
         int get_enem_count() const { return enemies_destroyed; }
+
+        void set_coin_count(int count) { coins_collected = count; }
+        void set_enem_count(int count) { enemies_destroyed = count; }
+
         int get_health() const { return health; }
 
         bool is_dead() { return (health == 0); }

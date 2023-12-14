@@ -9,7 +9,7 @@ namespace configurations
     void delay(int N=DELAY_TIME);
     namespace background_file_paths
     {
-        constexpr const char *BACKGROUND_PATH = "textures/1330857.jpg";
+        constexpr const char *BACKGROUND_PATH = "textures/back_drop_1.jpg";
         constexpr const char *PLAYER_LIFE_PATH = "textures/big_block.png";
     }
 }
