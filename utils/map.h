@@ -72,6 +72,7 @@ class Map
                             vector<vector<int>> *tile_map, const char *file_name, int number_of_tiles);
 
         Matrix<Tile>* get_tile_map() { return &tile_map; }
+        void set_tile_map(const Matrix<int> &tile_map);
         void draw();
 };
 

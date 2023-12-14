@@ -72,7 +72,6 @@ void Game::player_reset_position(Player &player)
 {
     player.set_x(DEFAULT_PLAYER_X);
     player.set_y(DEFAULT_PLAYER_Y);
-    std::cout << player.get_x() << " " << player.get_y();
 }
 
 void Game::player_reset_assets(Player &player)
@@ -132,7 +131,7 @@ void Game::change_game_map()
     if (player.attributes.get_coin_count() >= PLAYER_COIN_LIMIT)
     {
         level_complete = true;
-        std::cout << "Game::change_game_map(): Player has enough coins" << std::endl;
+        //std::cout << "Game::change_game_map(): Player has enough coins" << std::endl;
     }
     if (level_complete)
     {
@@ -142,8 +141,9 @@ void Game::change_game_map()
             if ((current_level.second + 1) < world::world_maps.at(current_level.first).size())
             {
                 std::cout << "Game::change_game_map(): Changing map";
-                game_map->init_map(TILE_SIZE, &WORLD_MAP(current_level.first, ++current_level.second));
+                
                 game_map->set_tile_file_name("textures/map2_tile_sheet.png");
+                game_map->set_tile_map(WORLD_MAP(current_level.first, ++current_level.second));
                 game_map->init_sprites(TILE_SIZE);
                 player_reset_position(player);
                 player_reset_assets(player);
