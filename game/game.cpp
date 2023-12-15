@@ -148,7 +148,7 @@ void Game::change_game_map()
                 game_map->init_sprites(TILE_SIZE);
                 player_reset_position(player, 170, -800);
                 player_reset_assets(player);
-                background->set_texture("textures/back_drop_1.jpg");
+                background->set_texture("textures/back_drop_2.jpg");
                 AudioHandler::get_instance().stop_music();
                 AudioHandler::get_instance().play_music("sounds/woooooo2.mp3", music_settings::BACKGROUND_MUSIC_VOLUME);
                 set_delay_speed(LARGE_MAP_DELAY_TIME);
