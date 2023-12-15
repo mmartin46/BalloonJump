@@ -87,14 +87,15 @@ vector<std::shared_ptr<Enemy>> EnemyHandler::allocate_enemies(const int NUM_ENEM
             enemy = std::make_shared<Enemy>(x_pos, y_pos);
         }
 
-        enemies.push_back(enemy);
+        enemies.emplace_back(enemy);
     }
     return enemies;
 }
 
 void EnemyHandler::draw_enemies() noexcept
 {
-    typename vector<std::shared_ptr<Enemy>>::pointer enemy, enemy_end = enemies.data() + enemies.size();
+    const size_t num_enemies = enemies.size();
+    typename vector<std::shared_ptr<Enemy>>::pointer enemy, enemy_end = enemies.data() + num_enemies;
     for (enemy = enemies.data(); enemy < enemy_end; ++enemy)
     {
         (*enemy)->draw(*window_ptr);
@@ -103,7 +104,8 @@ void EnemyHandler::draw_enemies() noexcept
 
 void EnemyHandler::update_enemies(Player *player) noexcept
 {
-    typename vector<std::shared_ptr<Enemy>>::pointer enemy, enemy_end = enemies.data() + enemies.size();
+    const size_t num_enemies = enemies.size();
+    typename vector<std::shared_ptr<Enemy>>::pointer enemy, enemy_end = enemies.data() + num_enemies;
     for (enemy = enemies.data(); enemy < enemy_end; ++enemy)
     {
         (*enemy)->update();
