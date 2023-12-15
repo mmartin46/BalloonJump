@@ -9,17 +9,12 @@ int main()
 
     sf::RenderWindow window(sf::VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT), "Test Game");
     MapHandler &map_handler = MapHandler::get_instance(window);
-    // init_all(map_handler, window);
+
+
     Map map(&window, WORLD_MAP(0, 0).size(), WORLD_MAP(0, 0).at(0).size(), TILE_SIZE,
             &WORLD_MAP(0, 0), "textures/map1_tile_sheet.png",
             NUM_TILES + 1);
     ALL_WORLDS[WORLD_1].push_back(map);
-
-    // Map map_2(&window, WORLD_MAP(0, 1).size(), WORLD_MAP(0, 1).at(0).size(), TILE_SIZE,
-    //         &WORLD_MAP(0, 1), "textures/map2_tile_sheet.png",
-    //         NUM_TILES + 1);
-    // ALL_WORLDS[WORLD_1].push_back(map_2);
-
 
     for (int map_index = 1; map_index < NUM_MAPS; ++map_index)
     {
