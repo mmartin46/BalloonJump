@@ -69,10 +69,10 @@ void Game::player_enemy_collision_handling()
     }
 }
 
-void Game::player_reset_position(Player &player)
+void Game::player_reset_position(Player &player, double x, double y)
 {
-    player.set_x(DEFAULT_PLAYER_X);
-    player.set_y(DEFAULT_PLAYER_Y);
+    player.set_x(x);
+    player.set_y(y);
 }
 
 void Game::player_reset_assets(Player &player)
@@ -146,7 +146,7 @@ void Game::change_game_map()
                 game_map->set_tile_file_name("textures/map2_tile_sheet.png");
                 game_map->set_tile_map(WORLD_MAP(current_level.first, ++current_level.second));
                 game_map->init_sprites(TILE_SIZE);
-                player_reset_position(player);
+                player_reset_position(player, 170, -800);
                 player_reset_assets(player);
                 background->set_texture("textures/back_drop_1.jpg");
                 AudioHandler::get_instance().stop_music();

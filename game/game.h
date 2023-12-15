@@ -62,7 +62,7 @@ class Game
         bool is_game_over() { return game_over; }
         void handle_game_over();
 
-        void player_reset_position(Player &player);
+        void player_reset_position(Player &player, double x=DEFAULT_PLAYER_X, double y=DEFAULT_PLAYER_Y);
         void player_reset_assets(Player &player);
 
         void player_enemy_collision_handling();
