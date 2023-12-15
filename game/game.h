@@ -44,6 +44,7 @@ class Game
         bool game_over;
         bool level_complete;
         pair<int, int> current_level;
+        int delay_speed;
 
         void init_current_level();
     public:
@@ -66,6 +67,9 @@ class Game
 
         void player_enemy_collision_handling();
         void change_game_map();
+
+        void set_delay_speed(int speed) { delay_speed = speed; }
+        int get_delay_speed() { return delay_speed; }
 };
 
 

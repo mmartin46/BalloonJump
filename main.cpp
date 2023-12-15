@@ -40,7 +40,7 @@ int main()
 
         //std::cout << game.get_player().get_on_ground() << std::endl;
         window.display();
-        configurations::delay();
+        configurations::delay(game.get_delay_speed());
     }
     return 0;
 }

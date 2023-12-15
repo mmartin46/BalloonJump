@@ -29,6 +29,7 @@ Game::Game(sf::RenderWindow *window, Map *map) : window(window), game_map(map), 
     enemy_handler = EnemyHandler(window);
     set_game_over(false);
     level_complete = false;
+    set_delay_speed(DELAY_TIME);
 
 
     AudioHandler::get_instance().play_music(music_file_paths::LEVEL_ONE_MUSIC, music_settings::BACKGROUND_MUSIC_VOLUME);
@@ -147,8 +148,10 @@ void Game::change_game_map()
                 game_map->init_sprites(TILE_SIZE);
                 player_reset_position(player);
                 player_reset_assets(player);
+                background->set_texture("textures/back_drop_1.jpg");
                 AudioHandler::get_instance().stop_music();
                 AudioHandler::get_instance().play_music("sounds/woooooo2.mp3", music_settings::BACKGROUND_MUSIC_VOLUME);
+                set_delay_speed(1);
             }
         }
         catch(const std::exception& e)

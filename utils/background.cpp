@@ -12,7 +12,7 @@ Background::Background(const char *file_name, sf::RenderWindow &window)
     this->window = &window;
 }
 
-void Background::set_texture(const char *file_name)
+void Background::set_texture(const char *file_name, int pos_x, int pos_y, float scale_x, float scale_y)
 {
     if (!texture.loadFromFile(file_name))
     {
@@ -20,7 +20,8 @@ void Background::set_texture(const char *file_name)
         exit(EXIT_FAILURE);
     } 
     background_image = sf::Sprite(texture);
-    background_image.setPosition(-300, -300);
+    background_image.setPosition(pos_x, pos_y);
+    background_image.setScale(scale_x, scale_y);
 }
 
 void Background::draw()
