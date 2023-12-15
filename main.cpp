@@ -20,6 +20,7 @@ int main()
     //         NUM_TILES + 1);
     // ALL_WORLDS[WORLD_1].push_back(map_2);
 
+
     for (int map_index = 1; map_index < NUM_MAPS; ++map_index)
     {
         string map_texture_path = "textures/map" + to_string(map_index + 1) + "_tile_sheet.png";
