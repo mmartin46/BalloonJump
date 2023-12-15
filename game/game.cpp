@@ -151,7 +151,7 @@ void Game::change_game_map()
                 background->set_texture("textures/back_drop_1.jpg");
                 AudioHandler::get_instance().stop_music();
                 AudioHandler::get_instance().play_music("sounds/woooooo2.mp3", music_settings::BACKGROUND_MUSIC_VOLUME);
-                set_delay_speed(1);
+                set_delay_speed(LARGE_MAP_DELAY_TIME);
             }
         }
         catch(const std::exception& e)

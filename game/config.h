@@ -2,6 +2,7 @@
 #define CONFIG_H
 
 constexpr int DELAY_TIME = 100;
+constexpr int LARGE_MAP_DELAY_TIME = 1;
 
 
 namespace configurations
