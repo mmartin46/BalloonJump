@@ -52,10 +52,6 @@ int Game::entity_collision(Player &plyr, int i, int j, std::pair<int, int> dim)
     float bx = tiles.at(i).at(j).get_x(), by = tiles.at(i).at(j).get_y();
     float bw = TILE_SIZE, bh = TILE_SIZE;
 
-    const int TOP_EDGE = 1;
-    const int BOTTOM_EDGE = 2;
-    const int RIGHT_EDGE = 3;
-    const int LEFT_EDGE = 4;
 
     if ((tiles.at(i).at(j).get_value() == 0) || (tiles.at(i).at(j).get_value() == COIN_VALUE))
     {
@@ -82,7 +78,7 @@ int Game::entity_collision(Player &plyr, int i, int j, std::pair<int, int> dim)
             plyr.set_dy(0);
             plyr.set_on_ground(false);
             plyr.set_is_jumping(true);
-            touched = TOP_EDGE;
+            touched = CollisionEdge::TOP_EDGE;
         }
     }
     if (px+pw > bx && px<bx+bw)
@@ -98,7 +94,7 @@ int Game::entity_collision(Player &plyr, int i, int j, std::pair<int, int> dim)
             plyr.set_dy(0);
             plyr.set_on_ground(true);
             //plyr.set_is_jumping(false);
-            touched = BOTTOM_EDGE;
+            touched = CollisionEdge::BOTTOM_EDGE;
         }
     }
 
@@ -126,7 +122,7 @@ int Game::entity_collision(Player &plyr, int i, int j, std::pair<int, int> dim)
             px = bx-pw;
 
             plyr.set_dx(0);
-            touched = LEFT_EDGE;
+            touched = CollisionEdge::LEFT_EDGE;
             if (enemy)
             {
                 enemy->set_is_stuck(STUCK_MOVING_LEFT);
@@ -134,7 +130,8 @@ int Game::entity_collision(Player &plyr, int i, int j, std::pair<int, int> dim)
         }
     }
 
-    if (touched == RIGHT_EDGE || touched == LEFT_EDGE)
+    if (touched == CollisionEdge::RIGHT_EDGE || 
+        touched == CollisionEdge::LEFT_EDGE)
     {
         plyr.set_on_ground(false);
     }

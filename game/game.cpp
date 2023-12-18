@@ -31,6 +31,8 @@ Game::Game(sf::RenderWindow *window, Map *map) : window(window), game_map(map), 
     level_complete = false;
     set_delay_speed(DELAY_TIME);
 
+    level_settings = LevelSetting(0, std::make_pair<int, int>(PLAYER_INIT_X, PLAYER_INIT_Y), 
+        background_file_paths::BACKGROUND_PATH, map_file_paths::texture_file_paths.at(0));
 
     AudioHandler::get_instance().play_music(music_file_paths::LEVEL_ONE_MUSIC, music_settings::BACKGROUND_MUSIC_VOLUME);
 
@@ -86,6 +88,7 @@ void Game::update()
 {
     player.update();
     player_enemy_collision_handling();
+    check_player_out_of_bounds();
 
 
     static float background_dy;
@@ -146,7 +149,7 @@ void Game::change_game_map()
                 game_map->set_tile_file_name("textures/map2_tile_sheet.png");
                 game_map->set_tile_map(WORLD_MAP(current_level.first, ++current_level.second));
                 game_map->init_sprites(TILE_SIZE);
-                player_reset_position(player, 170, -800);
+                player_reset_position(player, 170, 1500);
                 player_reset_assets(player);
                 background->set_texture("textures/back_drop_2.jpg");
                 AudioHandler::get_instance().stop_music();
@@ -159,6 +162,14 @@ void Game::change_game_map()
             std::cerr << e.what() << '\n';
         }
         level_complete = false;
+    }
+}
+
+void Game::check_player_out_of_bounds()
+{
+    if (player.get_y() >= bounds::PLAYER_OUT_BOUNDS_Y)
+    {
+        player_reset_position(player);
     }
 }
 

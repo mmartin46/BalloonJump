@@ -10,6 +10,7 @@
 #include <memory>
 #include "../entities/enemyhandler.h"
 #include "../utils/header.h"
+#include "../utils/levelsetting.h"
 
 #define PLAYER_INIT_X 100
 #define PLAYER_INIT_Y 100
@@ -23,11 +24,25 @@ constexpr int MIN_ENEMY_Y = -3000;
 constexpr int PLAYER_COIN_LIMIT = 100;
 constexpr int COIN_VALUE = 5;
 
+namespace bounds
+{
+    constexpr int PLAYER_OUT_BOUNDS_X = INT_MAX;
+    constexpr int PLAYER_OUT_BOUNDS_Y = 4000;
+}
+
 using std::to_string;
 using std::pair;
 
 #define WORLD_MAP(stage, level)  world::world_maps.at(stage).at(level)
 
+
+enum CollisionEdge
+{
+    TOP_EDGE = 1,
+    BOTTOM_EDGE,
+    RIGHT_EDGE,
+    LEFT_EDGE
+};
 
 class Game
 {
@@ -39,6 +54,8 @@ class Game
         std::shared_ptr<Background> background;
 
         GameHeader header;
+        LevelSetting level_settings;
+        
         EnemyHandler enemy_handler;
         Player player;
         bool game_over;
@@ -47,6 +64,7 @@ class Game
         int delay_speed;
 
         void init_current_level();
+        void check_player_out_of_bounds();
     public:
         Game(sf::RenderWindow *window, Map *game_map);
         Player get_player() { return player; }
@@ -70,6 +88,7 @@ class Game
 
         void set_delay_speed(int speed) { delay_speed = speed; }
         int get_delay_speed() { return delay_speed; }
+
 };
 
 

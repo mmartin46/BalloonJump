@@ -10,38 +10,28 @@
 class LevelSetting
 {
     private:
-        static int next_id;
         std::string id;
         int delay_time;
         std::pair<int,int> player_start_coordinates;
         const char *background_music_file;
         const char *tile_file_name;
     public:
+        static int next_id;
         LevelSetting();
         LevelSetting(int, const std::pair<int, int> &player_start_coordinates, const char *, const char *);
+        void set_delay_time(int time) { this->delay_time = time; }
+        int get_delay_time() const { return delay_time; }
+
+        void set_background_music_file(const char *background_music_file) { this->background_music_file = background_music_file; }
+        const char *get_background_music_file() const { return background_music_file; }
+
+        void set_tile_file_name(const char *tile_file_name) { this->tile_file_name = tile_file_name; }
+        const char *get_tile_file_name() const { return tile_file_name; }
+
+        void set_player_start_coordinates(std::pair<int, int> start_coords) { this->player_start_coordinates = start_coords; }
+        std::pair<int, int> get_player_start_coordinates() const { return player_start_coordinates; } 
 };
 
-int LevelSetting::next_id = 0;
 
-LevelSetting::LevelSetting()
-{
-    id = next_id++;
-    delay_time = DELAY_TIME;
-    player_start_coordinates = {0, 0};
-    background_music_file = nullptr;
-    tile_file_name = nullptr;
-}
-
-LevelSetting::LevelSetting(int delay_time, 
-                            const std::pair<int, int> &player_start_coordinates, 
-                            const char *background_music_file,
-                            const char *tile_file_name)
-{
-    id = next_id++;
-    this->delay_time = delay_time;
-    this->player_start_coordinates = player_start_coordinates;
-    this->background_music_file = background_music_file;
-    this->tile_file_name = tile_file_name;
-}
 
 #endif
