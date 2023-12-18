@@ -25,7 +25,8 @@ constexpr int JUMP_HEIGHT = -20;
 // Sprite flipping
 #define LEFT 1.0f
 #define RIGHT -1.0f
-
+#define INVERSE_POSITION -1, 1
+#define DEFAULT_POSITION 1, 1
 
 constexpr int PLAYER_WIDTH = 16;
 constexpr int PLAYER_HEIGHT = 16;

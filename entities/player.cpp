@@ -82,12 +82,12 @@ void Player::draw(sf::RenderWindow &window)
     sf::Sprite *curr_sprite = &sprites.at(frame);
     if (!facing_right)
     {
-        curr_sprite->setScale(-1, 1);
+        curr_sprite->setScale(INVERSE_POSITION);
         curr_sprite->setPosition(get_x() + PLAYER_WIDTH, get_y());
     }
     else
     {
-        curr_sprite->setScale(1, 1);
+        curr_sprite->setScale(DEFAULT_POSITION);
         curr_sprite->setPosition(get_x(), get_y());        
     }
     window.draw(*curr_sprite);
