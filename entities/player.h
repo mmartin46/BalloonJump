@@ -18,6 +18,7 @@
 #define HALF_SCREEN_HEIGHT SCREEN_HEIGHT / 2
 
 
+
 constexpr int PLAYER_SPEED = 6;
 constexpr int DEFAULT_PLAYER_X = 170;
 constexpr int DEFAULT_PLAYER_Y = 0;

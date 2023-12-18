@@ -112,7 +112,7 @@ void Game::update()
     handle_game_over();
     change_game_map();
 
-    game_view.setCenter(get_player().get_x() + PLAYER_WIDTH / 2, get_player().get_y() + PLAYER_HEIGHT / 2);
+    game_view.setCenter(CENTER_PLAYER_VIEW_X, CENTER_PLAYER_VIEW_Y);
 }
 
 

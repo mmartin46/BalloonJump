@@ -16,6 +16,8 @@
 
 #define PLAYER_INIT_X 100
 #define PLAYER_INIT_Y 100
+#define CENTER_PLAYER_VIEW_X get_player().get_x() + PLAYER_WIDTH / 2
+#define CENTER_PLAYER_VIEW_Y get_player().get_y() + PLAYER_HEIGHT / 2
 
 
 constexpr int MAX_ENEMY_X = 5000;
