@@ -36,7 +36,7 @@ Game::Game(sf::RenderWindow *window, Map *map) : window(window), game_map(map), 
     header.set_string("Health x" + (to_string(player.attributes[attribs::CURR_HEALTH])) + "\tCoins x" + (to_string(player.attributes[attribs::COIN_COUNT]) + "\tEnemies x" + (to_string(player.attributes[attribs::ENEMY_COUNT]))));
 
     enemy_handler.allocate_enemies(ENEMY_COUNT, MIN_ENEMY_X, MAX_ENEMY_X, MIN_ENEMY_Y, MAX_ENEMY_Y);
-    game_view.setSize(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2);
+    game_view.setSize(HALF_SCREEN_WIDTH, HALF_SCREEN_HEIGHT);
 }
 
 
