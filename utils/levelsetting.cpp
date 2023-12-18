@@ -1,24 +1,24 @@
 #include "levelsetting.h"
 
-int LevelSetting::next_id = 0;
-
 LevelSetting::LevelSetting()
 {
-    id = next_id++;
-    delay_time = DELAY_TIME;
-    player_start_coordinates = {0, 0};
-    background_music_file = nullptr;
-    tile_file_name = nullptr;
+    init_files();
 }
 
-LevelSetting::LevelSetting(int delay_time, 
-                            const std::pair<int, int> &player_start_coordinates, 
-                            const char *background_music_file,
-                            const char *tile_file_name)
+void LevelSetting::init_files()
 {
-    id = next_id++;
-    this->delay_time = delay_time;
-    this->player_start_coordinates = player_start_coordinates;
-    this->background_music_file = background_music_file;
-    this->tile_file_name = tile_file_name;
+    background_files = std::vector<std::string>();
+    tile_map_files = std::vector<std::string>();
+    music_files = std::vector<std::string>();
+
+    for (int i = 1; i <= NUMBER_OF_MAPS; ++i)
+    {
+        std::string back_file = "textures/back_drop_" + std::to_string(i) + ".jpg";
+        std::string map_file = "textures/map" + std::to_string(i) + "_tile_sheet.png";
+        std::string music_file = "sounds/bg_music_" + std::to_string(i) + ".mp3";
+
+        background_files.push_back(back_file);
+        tile_map_files.push_back(map_file);
+        music_files.push_back(music_file);
+    }
 }

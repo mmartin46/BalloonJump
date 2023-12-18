@@ -31,9 +31,6 @@ Game::Game(sf::RenderWindow *window, Map *map) : window(window), game_map(map), 
     level_complete = false;
     set_delay_speed(DELAY_TIME);
 
-    level_settings = LevelSetting(0, std::make_pair<int, int>(PLAYER_INIT_X, PLAYER_INIT_Y), 
-        background_file_paths::BACKGROUND_PATH, map_file_paths::texture_file_paths.at(0));
-
     AudioHandler::get_instance().play_music(music_file_paths::LEVEL_ONE_MUSIC, music_settings::BACKGROUND_MUSIC_VOLUME);
 
     header.set_string("Health x" + (to_string(player.attributes[attribs::CURR_HEALTH])) + "\tCoins x" + (to_string(player.attributes[attribs::COIN_COUNT]) + "\tEnemies x" + (to_string(player.attributes[attribs::ENEMY_COUNT]))));
@@ -86,6 +83,7 @@ void Game::player_reset_assets(Player &player)
 
 void Game::update()
 {
+    generate_delay();
     player.update();
     player_enemy_collision_handling();
     check_player_out_of_bounds();
@@ -135,7 +133,6 @@ void Game::change_game_map()
     if (player.attributes.get_coin_count() >= PLAYER_COIN_LIMIT)
     {
         level_complete = true;
-        //std::cout << "Game::change_game_map(): Player has enough coins" << std::endl;
     }
     if (level_complete)
     {
@@ -146,15 +143,16 @@ void Game::change_game_map()
             {
                 std::cout << "Game::change_game_map(): Changing map";
                 
-                game_map->set_tile_file_name("textures/map2_tile_sheet.png");
+                game_map->set_tile_file_name(LevelSetting::get_instance().get_map_file(accumulative_current_level()));
                 game_map->set_tile_map(WORLD_MAP(current_level.first, ++current_level.second));
                 game_map->init_sprites(TILE_SIZE);
                 player_reset_position(player, 170, 1500);
                 player_reset_assets(player);
-                background->set_texture("textures/back_drop_2.jpg");
+                background->set_texture(LevelSetting::get_instance().get_background_file(accumulative_current_level()));
                 AudioHandler::get_instance().stop_music();
-                AudioHandler::get_instance().play_music("sounds/woooooo2.mp3", music_settings::BACKGROUND_MUSIC_VOLUME);
-                set_delay_speed(LARGE_MAP_DELAY_TIME);
+                AudioHandler::get_instance().play_music(LevelSetting::get_instance().get_music_file(accumulative_current_level()),
+                                                         music_settings::BACKGROUND_MUSIC_VOLUME);
+                set_delay_speed(get_delay_speed());
             }
         }
         catch(const std::exception& e)
@@ -162,6 +160,20 @@ void Game::change_game_map()
             std::cerr << e.what() << '\n';
         }
         level_complete = false;
+    }
+
+}
+
+void Game::generate_delay()
+{
+    const int MAP_SIZE = WORLD_MAP(current_level.first, current_level.second).size();
+    if (MAP_SIZE >= 100)
+    {
+        delay_speed = LARGE_MAP_DELAY_TIME;
+    }
+    else
+    {
+        delay_speed = DELAY_TIME;
     }
 }
 

@@ -2,7 +2,7 @@
 #define CONFIG_H
 #include <vector>
 
-constexpr int DELAY_TIME = 100;
+constexpr int DELAY_TIME = 6000;
 constexpr int LARGE_MAP_DELAY_TIME = 1;
 
 

@@ -33,7 +33,7 @@ namespace music_settings
     // File paths for all music.
     namespace music_file_paths
     {
-        constexpr const char* LEVEL_ONE_MUSIC = "sounds//woooooo.mp3";
+        constexpr const char* LEVEL_ONE_MUSIC = "sounds//bg_music_1.mp3";
     }
 }
 

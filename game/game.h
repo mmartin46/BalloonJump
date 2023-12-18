@@ -11,6 +11,8 @@
 #include "../entities/enemyhandler.h"
 #include "../utils/header.h"
 #include "../utils/levelsetting.h"
+#include <string>
+
 
 #define PLAYER_INIT_X 100
 #define PLAYER_INIT_Y 100
@@ -54,7 +56,6 @@ class Game
         std::shared_ptr<Background> background;
 
         GameHeader header;
-        LevelSetting level_settings;
         
         EnemyHandler enemy_handler;
         Player player;
@@ -65,6 +66,8 @@ class Game
 
         void init_current_level();
         void check_player_out_of_bounds();
+        int accumulative_current_level() { return current_level.first + current_level.second; }
+        void generate_delay();
     public:
         Game(sf::RenderWindow *window, Map *game_map);
         Player get_player() { return player; }
@@ -87,7 +90,11 @@ class Game
         void change_game_map();
 
         void set_delay_speed(int speed) { delay_speed = speed; }
-        int get_delay_speed() { return delay_speed; }
+        int get_delay_speed() { 
+            generate_delay();
+            return delay_speed;
+        }
+
 
 };
 
