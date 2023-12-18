@@ -12,7 +12,7 @@ int main()
 
 
     Map map(&window, WORLD_MAP(0, 0).size(), WORLD_MAP(0, 0).at(0).size(), TILE_SIZE,
-            &WORLD_MAP(0, 0), "textures/map1_tile_sheet.png",
+            &WORLD_MAP(0, 0), LevelSetting::get_instance().get_map_file(0),
             NUM_TILES + 1);
     ALL_WORLDS[WORLD_1].push_back(map);
 
