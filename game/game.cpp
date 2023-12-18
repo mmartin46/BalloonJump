@@ -83,7 +83,11 @@ void Game::player_reset_assets(Player &player)
 
 void Game::update()
 {
+    // Checks how much delay time needs to be added
+    // based on the current state.
     generate_delay();
+
+
     player.update();
     player_enemy_collision_handling();
     check_player_out_of_bounds();
