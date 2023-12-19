@@ -5,7 +5,7 @@
 #include <utility>
 #include "../game/config.h"
 
-constexpr int NUMBER_OF_MAPS = 2;
+constexpr int NUMBER_OF_MAPS = 3;
 // FIXME: Finish and use this class 
 // Easier way to handle the level settings
 class LevelSetting
