@@ -2,7 +2,7 @@
 #include "game/game.h"
 #include "utils/maphandler.h"
 
-constexpr int NUM_MAPS = 2;
+constexpr int NUM_MAPS = 3;
 
 int main()
 { 
